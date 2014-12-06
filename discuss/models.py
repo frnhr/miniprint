@@ -19,17 +19,26 @@ class DiscussScoreMixin(models.Model):
 
 class Comment(MPTTModel, DiscussScoreMixin):
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
+    chunk = models.ForeignKey('fineprint.Chunk', null=True, blank=True, related_name='comments')
     user = models.ForeignKey('users.User')
     text = models.CharField(max_length=255, null=False, blank=False)
     timestamp = models.DateTimeField()
 
     class MPTTMeta:
-        order_insertion_by = ['score']
+        order_insertion_by = ['discuss_score', ]
 
     def save(self, *args, **kwargs):
         if not self.timestamp:
             self.timestamp = timezone.now()
+        if self.chunk and self.parent:
+            raise ValueError('Cant define both parent and chunk')
         return super(Comment, self).save(*args, **kwargs)
+
+    def short_text(self):
+        return self.text[:30] + ('...' if len(self.text) > 30 else '')
+
+    def __unicode__(self):
+        return "C{}: {}".format(self.id, self.short_text())
 
 
 class VoteModel(models.Model):

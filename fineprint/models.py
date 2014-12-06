@@ -36,8 +36,12 @@ class Chunk(DiscussScoreMixin, models.Model):
         else:
             return 'p'
 
+    def short_text(self):
+        length = 80
+        return self.text[:length] + ('...' if len(self.text) > length else '')
+
     def __unicode__(self):
-        return u'{}: {}'.format(self.type_str(), self.text)
+        return u'{}: {}'.format(self.type_str(), self.short_text())
 
     class Meta:
         ordering = ['order', ]

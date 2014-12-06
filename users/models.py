@@ -78,3 +78,6 @@ class Company(models.Model):
 
     class Meta:
         verbose_name_plural = u'companies'
+
+    def __unicode__(self):
+        return self.name
