@@ -37,6 +37,7 @@ class Migration(migrations.Migration):
                 ('user', models.OneToOneField(related_name='company', to=settings.AUTH_USER_MODEL)),
             ],
             options={
+                'verbose_name_plural': 'companies',
             },
             bases=(models.Model,),
         ),

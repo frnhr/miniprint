@@ -3,36 +3,32 @@ from django.db import models
 from users.models import Company
 
 
-class Element(models.Model):
+class Chunk(models.Model):
+    TYPES = namedtuple('TYPES', ('heading', 'paragraph', ))._make(range(2))
+    TYPE_CHOICES = [(TYPES.heading, 'Heading'), (TYPES.paragraph, 'Paragraph'), ]
+    HEADING_STRENGTHS = namedtuple('STRENGTHS', ('h1', 'h2', 'h3', 'h4', 'h5', 'h6'))._make(range(6))
+    HEADING_STRENGTH_CHOICES = [(getattr(HEADING_STRENGTHS, 'h{}'.format(i)), 'H{}'.format(i)) for i in range(1, len(HEADING_STRENGTHS) + 1)]
+
     previous = models.OneToOneField('self', related_name='next', null=True, blank=True)
+    type = models.PositiveSmallIntegerField(choices=TYPE_CHOICES)
 
+    text = models.TextField()
+    heading_strength = models.PositiveSmallIntegerField(choices=HEADING_STRENGTH_CHOICES, null=True, blank=True)
 
-class Heading(Element):
-    STRENGTHS = namedtuple('STRENGTHS', ('h1', 'h2', 'h3', 'h4', 'h5', 'h6'))._make(range(6))
-    STRENGTH_CHOICES = [(STRENGTHS.h1, 'h1'), (STRENGTHS.h2, 'h2'), (STRENGTHS.h3, 'h3'),
-                        (STRENGTHS.h4, 'h4'), (STRENGTHS.h5, 'h5'), (STRENGTHS.h6, 'h6')]
-
-    strength = models.PositiveSmallIntegerField(choices=STRENGTH_CHOICES, null=False)
-    text = models.CharField(max_length=1000, null=False, blank=False)
-
-    def strength_str(self):
-        return self.STRENGTHS._fields[self.strength]
+    def type_str(self):
+        if self.type == self.TYPES.heading:
+            return self.HEADING_STRENGTHS._fields[self.heading_strength]
+        else:
+            return 'p'
 
     def __unicode__(self):
         return u'{}: {}'.format(self.strength_str(), self.text)
 
 
-class Chunk(Element):
-    text = models.TextField()
-
-    def __unicode__(self):
-        return u'{}{}'.format(self.text[:80], '...' if len(self.text) > 80 else '')
-
-
 class FinePrint(models.Model):
     company = models.ForeignKey(Company)
     title = models.CharField(max_length=500, null=False, blank=False)
-    first_element = models.OneToOneField(Element, related_name='fineprint')
+    first_chunk = models.OneToOneField(Chunk, related_name='fineprint')
 
     class Meta:
         verbose_name = u'Legal Text'
