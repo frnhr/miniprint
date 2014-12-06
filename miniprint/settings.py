@@ -44,9 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'adminsortable',
+    'mptt',
 
     'users',
     'fineprint',
+    'discuss',
     'web',
 ] + settings_local.ADDITIONAL_INSTALLED_APPS
 
@@ -91,7 +93,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-STATICFILES_DIRS = os.path.join(BASE_DIR, 'web', 'static')  # REMOVE ME: this is only for PyCharm...
+STATICFILES_DIRS = [  # REMOVE ME: this is only for PyCharm...
+    os.path.join(BASE_DIR, 'web', 'static'),
+]
 
 # Media
 

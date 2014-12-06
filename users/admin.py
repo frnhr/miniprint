@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from utils.admin import admin_register
 
-from .models import User
+from .models import User, Company
 
 
 class UserCreationForm(forms.ModelForm):
@@ -132,8 +132,12 @@ class UserAdmin(auth_admin.UserAdmin):
         return super(UserAdmin, self).lookup_allowed(lookup, value)
 
 
+class CompanyAdmin(admin.ModelAdmin):
+    model = Company
+
 
 admin_register(UserAdmin)
+admin_register(CompanyAdmin)
 
 
 admin.site.unregister(Group)
