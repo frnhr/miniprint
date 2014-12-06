@@ -43,6 +43,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'adminsortable',
+
+    'users',
+    'fineprint',
     'web',
 ] + settings_local.ADDITIONAL_INSTALLED_APPS
 
@@ -94,4 +98,6 @@ STATICFILES_DIRS = os.path.join(BASE_DIR, 'web', 'static')  # REMOVE ME: this is
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# User model:
 
+AUTH_USER_MODEL = 'users.User'
