@@ -15,6 +15,7 @@ class Migration(migrations.Migration):
             name='Chunk',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('discuss_score', models.BigIntegerField(default=0, blank=True)),
                 ('order', models.PositiveIntegerField(default=0)),
                 ('chunk_type', models.PositiveSmallIntegerField(choices=[(0, b'Heading'), (1, b'Paragraph')])),
                 ('text', models.TextField()),

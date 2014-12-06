@@ -1,5 +1,6 @@
 from collections import namedtuple
 from django.db import models
+from discuss.models import DiscussScoreMixin
 from users.models import Company
 
 
@@ -15,7 +16,7 @@ class Document(models.Model):
         return self.title
 
 
-class Chunk(models.Model):
+class Chunk(DiscussScoreMixin, models.Model):
     TYPES = namedtuple('TYPES', ('heading', 'paragraph', ))._make(range(2))
     TYPE_CHOICES = [(TYPES.heading, 'Heading'), (TYPES.paragraph, 'Paragraph'), ]
     HEADING_STRENGTHS = namedtuple('STRENGTHS', ('h1', 'h2', 'h3', 'h4', 'h5', 'h6'))._make(range(6))
