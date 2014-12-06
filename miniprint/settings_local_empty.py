@@ -7,8 +7,8 @@ ADDITIONAL_MIDDLEWARE_CLASSES = []
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'miniprint_django',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'miniprint.sqlite3',
     }
 }
 
