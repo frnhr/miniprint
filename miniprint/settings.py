@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'users',
     'web',
 ] + settings_local.ADDITIONAL_INSTALLED_APPS
 
@@ -92,4 +93,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# User model:
 
+AUTH_USER_MODEL = 'users.User'
