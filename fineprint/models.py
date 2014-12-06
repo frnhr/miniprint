@@ -1,11 +1,6 @@
 from collections import namedtuple
 from django.db import models
-from users.models import User
-
-
-class Company(models.Model):
-    user = models.OneToOneField(User, related_name='company')
-    name = models.CharField(max_length=500)
+from users.models import Company
 
 
 class Element(models.Model):

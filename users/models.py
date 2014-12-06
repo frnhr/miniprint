@@ -71,3 +71,8 @@ class User(AbstractBaseUser):
         if self.nick == '':
             self.nick = None
         return super(User, self).save(*args, **kwargs)
+
+
+class Company(models.Model):
+    user = models.OneToOneField(User, related_name='company')
+    name = models.CharField(max_length=500)
