@@ -2,27 +2,15 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-from django.conf import settings
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('users', '0001_initial'),
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='Company',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('name', models.CharField(max_length=500)),
-                ('user', models.OneToOneField(related_name='company', to=settings.AUTH_USER_MODEL)),
-            ],
-            options={
-            },
-            bases=(models.Model,),
-        ),
         migrations.CreateModel(
             name='Element',
             fields=[
@@ -47,7 +35,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('title', models.CharField(max_length=500)),
-                ('company', models.ForeignKey(to='fineprint.Company')),
+                ('company', models.ForeignKey(to='users.Company')),
             ],
             options={
                 'verbose_name': 'Legal Text',
@@ -74,7 +62,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='element',
             name='previous',
-            field=models.OneToOneField(related_name='next', to='fineprint.Element'),
+            field=models.OneToOneField(related_name='next', null=True, blank=True, to='fineprint.Element'),
             preserve_default=True,
         ),
     ]
