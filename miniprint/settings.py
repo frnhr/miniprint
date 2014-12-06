@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     'adminsortable',
     'mptt',
+    'twython_django_oauth',
 
     'users',
     'fineprint',
@@ -102,6 +103,17 @@ STATICFILES_DIRS = [  # REMOVE ME: this is only for PyCharm...
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# User model:
+# User model
 
 AUTH_USER_MODEL = 'users.User'
+
+
+# Social auth
+
+TWITTER_KEY = 'L5ZXu2ra4fged1CUONh8NMCyi'
+TWITTER_SECRET = 'LSNWo1FRnOqIdiN10y9Zv6vpJT9e9XAIde20et2ChP79xb4S6d'
+
+LOGIN_URL = '/twitter/login'
+LOGOUT_URL = '/twitter/logout'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
