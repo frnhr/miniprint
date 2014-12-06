@@ -87,7 +87,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-STATICFILES_DIRS = os.path.join(BASE_DIR, 'web', 'static')  # REMOVE ME: this is only for PyCharm...
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'web', 'static')]  # REMOVE ME: this is only for PyCharm...
 
 # Media
 
