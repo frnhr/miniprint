@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth import admin as auth_admin
-from django.contrib.auth import forms as auth_forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.models import Group
 from django import forms
-from django.utils.translation import ugettext, ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
+
+from utils.admin import admin_register
 
 from .models import User
 
@@ -131,11 +132,8 @@ class UserAdmin(auth_admin.UserAdmin):
         return super(UserAdmin, self).lookup_allowed(lookup, value)
 
 
-def _register(user_admin_class):
-    admin.site.register(user_admin_class.model, user_admin_class)
 
-
-_register(UserAdmin)
+admin_register(UserAdmin)
 
 
 admin.site.unregister(Group)
