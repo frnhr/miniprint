@@ -1,3 +1,7 @@
 from django.contrib import admin
+from fineprint.models import Company, Heading, Chunk
 
-# Register your models here.
+
+admin.site.register(Company)
+admin.site.register(Chunk)
+admin.site.register(Heading)

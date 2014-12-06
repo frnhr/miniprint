@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'users',
+    'fineprint',
     'web',
 ] + settings_local.ADDITIONAL_INSTALLED_APPS
 
