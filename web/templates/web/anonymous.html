@@ -1,2 +1,6 @@
-<h1>You must haz the twytter!</h1>
-<p><a href="{% url 'twitter_login' %}">go login yourself in twytter</a></p>
+{% extends 'web/index.html' %}
+{% block please_twitter_login %}
+    <div class="center">
+        <p class="big">We are still in alpha, please <a href="{% url 'twitter_login' %}">login with Twitter</a> to enable the features.</p>
+    </div>
+{% endblock please_twitter_login %}
