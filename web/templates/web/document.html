@@ -39,16 +39,10 @@
                                 <div class="media-body">
                                     {% if chunk.is_scorable %}
                                         <div class="media-body categorization">
-                                            <div class="btn-group-vertical" data-toggle="buttons">
-                                                  <label class="btn btn-default active">
-                                                        <input type="radio" name="options" id="option1" autocomplete="off" checked><span class=" glyphicon glyphicon-ok-circle" aria-hidden="true"></span>Good
-                                                  </label>
-                                                  <label class="btn btn-default">
-                                                        <input type="radio" name="options" id="option2" autocomplete="off"> Neutral
-                                                  </label>
-                                                  <label class="btn btn-default">
-                                                    <input type="radio" name="options" id="option3" autocomplete="off"> <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>Bad
-                                                  </label>
+                                            <div class="ratings vote_wrap">
+                                                <div class="upvote vote_link fa fa-arrow-up {% if chunk.id in voted_chunks_up %}voted_this{% endif %}" data-target_model="chunk" data-target_id="{{ chunk.id }}" data-score="1"></div>
+                                                <div class="score">{{ chunk.discuss_score }}</div>
+                                                <div class="downvote vote_link fa fa-arrow-down {% if chunk.id in voted_chunks_down %}voted_this{% endif %}" data-target_model="chunk" data-target_id="{{ chunk.id }}" data-score="-1"></div>
                                             </div>
                                         </div>
                                     {% endif %}
