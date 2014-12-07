@@ -30,3 +30,6 @@ class AboutView(TemplateView):
 
 class LoginView(TemplateView):
     template_name = 'web/login.html'
+
+class UploadView(TemplateView):
+    template_name = 'web/upload.html'
