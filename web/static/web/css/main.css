@@ -2661,3 +2661,9 @@ shortcodes page css
 
 }
 
+.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
+    background-color: #337ab7;
+    border-color: #337ab7;
+    color: #fff;
+    z-index: 2;
+}

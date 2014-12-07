@@ -6,13 +6,16 @@
             <div class="center wow fadeInDown">
                 <h2>Find company legal documents</h2>
                 {% block please_twitter_login %}{% endblock %}
-                <form>
+
+                <form action="/search/results/" method="post">
+                    {% csrf_token %}
                 	<div class="input-group">
-      					<input type="text" placeholder="Comany name" class="form-control">
+      					<input type="text" placeholder="Comany name" class="form-control" name="{{ form.company_name.name }}" id="{{ form.company_name.auto_id}}" value="{{ form.company_name.value|default:'' }}">
 					      <span class="input-group-btn">
-					        <button class="btn btn-default" type="button">Search!</button>
+					        <button type class="btn btn-default" type="submit">Search!</button>
 					      </span>
 				    </div><!-- /input-group -->
+
 
                 </form>
             </div>

@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from .views import HomeView,DocumentView,ChunkView,LoginView,AboutView,UploadView,ProfileView
+from .views import HomeView,DocumentView,ChunkView,LoginView,AboutView,UploadView,ProfileView,SearchView
 
 
 urlpatterns = patterns('',
@@ -11,4 +11,5 @@ urlpatterns = patterns('',
     url(r'^document/(?P<document_id>[\d]+)?$', DocumentView.as_view(), name='document'),
     url(r'^document/chunk/(?P<chunk_id>[\d]+)?$', ChunkView.as_view(), name='chunk'),
     url(r'^profile/$', ProfileView.as_view(), name='profile'),
+    url(r'^search/results/$', SearchView.as_view(), name='search'),
 )

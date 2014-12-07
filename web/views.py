@@ -80,3 +80,19 @@ class ProfileView(TwitterLoginRequired,FormView):
         new_company = Company(user=self.request.user,name=company_name)
         new_company.save()
         return super(ProfileView, self).form_valid(form)
+
+
+class SearchView(FormView):
+    template_name = 'web/search_results.html'
+    success_url = '/search/results/'
+    form_class = CompanyForm
+
+    def get_context_data(self, **kwargs):
+        context = super(SearchView, self).get_context_data(**kwargs)
+        return context
+
+    def form_valid(self,form):
+        company_name = form.cleaned_data['company_name']
+        results = Company.objects.filter(name__icontains=company_name)
+        return self.render_to_response(self.get_context_data(form=form, results=results))
+

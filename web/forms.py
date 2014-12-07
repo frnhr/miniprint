@@ -7,3 +7,4 @@ class DocumentUpload(forms.Form):
     title = forms.CharField(label='title', max_length=300)
     text  = forms.CharField(widget=forms.Textarea)
 
+
