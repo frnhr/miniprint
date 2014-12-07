@@ -50,9 +50,6 @@ class Comment(MPTTModel, DiscussScoreMixin):
     user = models.ForeignKey('users.User')
     text = models.CharField(max_length=255, null=False, blank=False)
     timestamp = models.DateTimeField()
-    VOTE_TYPE_CHOICES = (('chunk', 'Chunk'), ('comment', 'Comment'), )
-    vote_type = models.CharField(choices=VOTE_TYPE_CHOICES, max_length=10, null=True, blank=True)
-    vote_id = models.PositiveIntegerField(null=True, blank=True)
 
     class MPTTMeta:
         order_insertion_by = ['discuss_score', ]
@@ -69,19 +66,3 @@ class Comment(MPTTModel, DiscussScoreMixin):
 
     def __unicode__(self):
         return "C{}: {}".format(self.id, self.short_text())
-
-    @property
-    def vote(self):
-        if self.vote_id and self.vote_type:
-            try:
-                # yeah... I know :)
-                model_class_name = '{}Vote'.format(self.vote_type.capitalize())
-                model_class = getattr(__import__('discuss.models', globals(), locals(), [model_class_name]), model_class_name)
-                return model_class.objects.get(id=self.vote_id)
-            except ObjectDoesNotExist:
-                pass
-        return None
-
-    def vote_score(self):
-        vote = self.vote
-        return 0 if not vote else vote.score
