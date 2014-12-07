@@ -61,3 +61,8 @@ class Chunk(DiscussScoreMixin, models.Model):
     class Meta:
         ordering = ['order', ]
 
+
+class DocumentAgreement(models.Model):
+    document = models.ForeignKey(Document, null=False, blank=False)
+    user = models.ForeignKey('users.User', null=False, blank=False)
+    timestamp = models.DateTimeField(auto_now_add=True)
