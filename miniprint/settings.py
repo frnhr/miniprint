@@ -117,3 +117,9 @@ LOGIN_URL = '/twitter/login'
 LOGOUT_URL = '/twitter/logout'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+# Datetime formats
+DATETIME_FORMAT = r'F jS Y \a\t H:i'
+DATE_FORMAT = 'F jS Y'
+SHORT_DATE_FORMAT = 'M j y'
+SHORT_DATETIME_FORMAT = 'M j y H:i'
