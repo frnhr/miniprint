@@ -1,0 +1,26 @@
+{% extends 'web/main.html' %}
+
+{% block page_content %}
+<script src="{{ STATIC_URL }}web/js/markdown/lib/marked.js"></script>
+<script type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function(event) {
+     $('textarea').keypress(function(){
+
+  markedData = marked($('textarea').val())
+  $('#text-demo').html(markedData);
+});
+});
+</script>
+    <section id="document-upload">
+        <div class="container">
+            <div class="col-sm-6">
+
+                <textarea rows="10"></textarea>
+            </div>
+        <div class="col-sm-6" id="text-demo"></div>
+
+     </div>
+    </div>
+    </section>
+{% endblock %}

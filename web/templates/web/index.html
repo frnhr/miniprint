@@ -1,0 +1,159 @@
+{% extends 'web/main.html' %}
+{% block page_content %}
+    {% csrf_token %}
+    <section id="main-search">
+        <div class="container">
+            <div class="center wow fadeInDown">
+                <h2>Find company legal documents</h2>
+                {% block please_twitter_login %}{% endblock %}
+                <form>
+                	<div class="input-group">
+      					<input type="text" placeholder="Comany name" class="form-control">
+					      <span class="input-group-btn">
+					        <button class="btn btn-default" type="button">Search!</button>
+					      </span>
+				    </div><!-- /input-group -->
+
+                </form>
+            </div>
+
+        </div><!--/.container-->
+    </section><!--/#main-search-->
+
+    <section id="feature" >
+        <div class="container">
+           <div class="center wow fadeInDown">
+                <h2>For Companies</h2>
+           <!--     <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <br> et dolore magna aliqua. Ut enim ad minim veniam</p> -->
+            </div>
+
+            <div class="row">
+                <div class="features">
+                    <div class="col-md-4 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+                        <div class="feature-wrap">
+                            <i class="fa fa-cloud-download"></i>
+                            <h2>Easy upload</h2>
+                            <h3>Upload your legal documents and let us do the rest</h3>
+                        </div>
+                    </div><!--/.col-md-4-->
+                    <div class="col-md-4 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+                        <div class="feature-wrap">
+                            <i class="fa fa-copy"></i>
+                            <h2>Manage your legal documents</h2>
+                            <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit</h3>
+                        </div>
+                    </div><!--/.col-md-4-->
+
+                    <div class="col-md-4 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+                        <div class="feature-wrap">
+                            <i class="fa fa-cogs"></i>
+                            <h2>Integrate to your site</h2>
+                            <h3>With one line of code add your legal texts to your site</h3>
+                        </div>
+                    </div><!--/.col-md-4-->
+
+
+                </div>
+            </div>
+
+
+                       <div class="container">
+           <div class="center wow fadeInDown">
+                <h2>For Community</h2>
+             <!--   <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <br> et dolore magna aliqua. Ut enim ad minim veniam</p> -->
+            </div>
+
+            <div class="row">
+                <div class="features">
+                    <div class="col-md-4 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+                        <div class="feature-wrap">
+                            <i class="fa fa-bullhorn"></i>
+                            <h2>Share opinion</h2>
+                            <h3>Summurize part of legal documents in your own words. The more funny the better. </h3>
+                        </div>
+                    </div><!--/.col-md-4-->
+
+                    <div class="col-md-4 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+                        <div class="feature-wrap">
+                            <i class="fa fa-thumbs-down"></i>
+                            <h2>Rate legal documents</h2>
+                            <h3>Indicate how friendly legal documents are for company customers</h3>
+                        </div>
+                    </div><!--/.col-md-4-->
+
+                    <div class="col-md-4 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+                        <div class="feature-wrap">
+                            <i class="fa fa-folder-open"></i>
+                            <h2>Organise your licences</h2>
+                            <h3>Keep legal documents you agreed to on one place</h3>
+                        </div>
+
+                </div>
+                </div>
+
+
+                    </div><!--/.col-md-4-->
+                </div><!--/.services-->
+            </div><!--/.row-->
+        </div><!--/.container-->
+    </section><!--/#feature-->
+
+    <section id="trending">
+        <div class="container">
+            <div class="center wow fadeInDown">
+                <h2>Trending discussions</h2>
+                <p class="lead">Find hot topics about company policies</p>
+            </div>
+
+            {% for comment in trending %}
+                <div class="row">
+                    <div class="col-xs-3 ">
+                        <div class="progress">
+                            <div style="width: {{ comment.chunk.document.percentage }}%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="{{ comment.chunk.document.percentage }}" role="progressbar" class="progress-bar color1">
+                                <span class="bar-width">{{ comment.chunk.document.percentage }}%</span>
+                            </div>
+                        </div>
+                        <h3>{{ comment.chunk.document.company.name }} - {{ comment.chunk.document.title }}</h3>
+                        <a href="#">Opinions <span class="badge">{{ comment.chunk.document.comments_count }}</span></a>
+                    </div>
+
+                    <div class="col-xs-9 ">
+                        <div class="media comment_section">
+                            <div class="media-body post_reply_comments">
+                                <h4>{{ comment.user.get_full_name }}</h4>
+                                <h4>{{ comment.timestamp|date:'DATETIME_FORMAT' }}</h4>
+                                <p>{{ comment.render }}</p>
+                                <a href="#">Add your description</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!--/.row-->
+            {% endfor %}{# comment in trending #}
+
+            <div class="row">
+                <div class="col-xs-3 ">
+
+                <div class="progress">
+                <div style="width: 85%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar  color1">
+                                <span class="bar-width">85%</span>
+                              </div>
+                </div>
+                                <h2>Coursera student TOS</h2>
+                </div>
+				<div class="col-xs-9 ">
+				<div class="media comment_section">
+
+                            <div class="media-body post_reply_comments">
+                                <h3>Marsh</h3>
+                                <h4>NOVEMBER 9, 2013 AT 9:15 PM</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud</p>
+                                <a href="#">Add your description</a>
+                            </div>
+                        </div>
+                </div>
+            </div><!--/.row-->
+
+        </div><!--/.container-->
+    </section><!--/#recent-works-->
+{% endblock %}
