@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'users',
     'fineprint',
     'discuss',
+    'remote',
     'web',
 ] + settings_local.ADDITIONAL_INSTALLED_APPS
 

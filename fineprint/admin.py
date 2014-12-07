@@ -1,6 +1,6 @@
 from adminsortable.admin import SortableInlineAdminMixin
 from django.contrib import admin
-from fineprint.models import Chunk, Document
+from fineprint.models import Chunk, Document, DocumentAgreement
 from utils.admin import admin_register
 
 
@@ -22,5 +22,12 @@ class DocumentAdmin(admin.ModelAdmin):
     inlines = (ChunkInline, )
 
 
+class DocumentAgreementAdmin(admin.ModelAdmin):
+    model = DocumentAgreement
+    list_display = ('timestamp', 'document', 'user', )
+    list_filter = ('document', 'user', )
+
+
 admin_register(ChunkAdmin)
 admin_register(DocumentAdmin)
+admin_register(DocumentAgreementAdmin)
