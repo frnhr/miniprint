@@ -68,15 +68,22 @@ class Comment(MPTTModel, DiscussScoreMixin):
     def __unicode__(self):
         return "C{}: {}".format(self.id, self.short_text())
 
+    def render(self):
+        return self.text
+
     @classmethod
     def get_trending(cls):
         ago_24h = timezone.now() - timedelta(days=1)
         limit = 3
         min_score = 2
-        return (Comment.objects
-                .filter(timestamp__gte=ago_24h)
-                .values('chunk__document')
-                .annotate(max_score=models.Max('discuss_score'))
-                .filter(max_score__gte=min_score)
-                .order_by('-max_score')[:limit])
+        trending = (Comment.objects
+                    .filter(timestamp__gte=ago_24h, parent=None)
+                    .values('chunk__document')
+                    .annotate(max_score=models.Max('discuss_score'))
+                    .filter(max_score__gte=min_score)
+                    .order_by('-max_score')[:limit])
+        document_ids = [result['chunk__document'] for result in trending]
+        for document_id in document_ids:
+            yield Comment.objects.filter(chunk__document_id=document_id).order_by('-discuss_score')[0]
+
 
