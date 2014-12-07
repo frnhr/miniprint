@@ -1,3 +1,4 @@
+from datetime import timedelta
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.utils import timezone
@@ -66,3 +67,16 @@ class Comment(MPTTModel, DiscussScoreMixin):
 
     def __unicode__(self):
         return "C{}: {}".format(self.id, self.short_text())
+
+    @classmethod
+    def get_trending(cls):
+        ago_24h = timezone.now() - timedelta(days=1)
+        limit = 3
+        min_score = 2
+        return (Comment.objects
+                .filter(timestamp__gte=ago_24h)
+                .values('chunk__document')
+                .annotate(max_score=models.Max('discuss_score'))
+                .filter(max_score__gte=min_score)
+                .order_by('-max_score')[:limit])
+
