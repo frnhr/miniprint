@@ -6,7 +6,7 @@ from utils.admin import admin_register
 
 class ChunkAdmin(admin.ModelAdmin):
     model = Chunk
-    list_display = ('__unicode__', 'document', )
+    list_display = ('__unicode__', 'discuss_score', 'document', )
     list_filter = ('document', )
 
 

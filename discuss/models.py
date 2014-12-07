@@ -31,7 +31,7 @@ class VoteModel(models.Model):
         else:
             base_score = self.__class__.objects.get(id=self.id).score
         if self.target_id:
-            self.target.adjust_score_by(base_score + self.score)
+            self.target.adjust_score_by(self.score - base_score)
         return super(VoteModel, self).save(*args, **kwargs)
 
 
