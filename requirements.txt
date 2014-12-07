@@ -4,6 +4,7 @@ django-admin-sortable2==0.3.1
 django-mptt==0.6.1
 # twython-django==1.5.2  pypi package version problem, dl from https://github.com/ryanmcgrath/twython-django
 twython==3.2.0  # dependancy of twython-django
+django-http-status==0.2
 
 # dev:
 django-extensions==1.4.8
