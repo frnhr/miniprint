@@ -1,5 +1,6 @@
 from collections import namedtuple
 from django.db import models
+from django.utils import timezone
 from discuss.models import DiscussScoreMixin
 from users.models import Company
 from discuss.models import Comment, ChunkVote
@@ -8,9 +9,15 @@ from discuss.models import Comment, ChunkVote
 class Document(models.Model):
     company = models.ForeignKey(Company)
     title = models.CharField(max_length=500, null=False, blank=False)
+    timestamp = models.DateTimeField(null=False, blank=True)
 
     class Meta:
         verbose_name = u'Legal Document'
+
+    def save(self, *args, **kwargs):
+        if not self.timestamp:
+            self.timestamp = timezone.now()
+        return super(Document, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.title
@@ -57,6 +64,15 @@ class Chunk(DiscussScoreMixin, models.Model):
 
     def comments_count(self):
         return self.comments.all().count()
+
+    def is_scorable(self):
+        return self.chunk_type == self.TYPES.paragraph
+
+    def top_comment(self):
+        try:
+            return self.comments.order_by('-discuss_score')[0]
+        except IndexError:
+            return None
 
     class Meta:
         ordering = ['order', ]
