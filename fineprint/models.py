@@ -6,7 +6,7 @@ from discuss.models import Comment, ChunkVote
 
 
 class Document(models.Model):
-    company = models.ForeignKey(Company)
+    company = models.ForeignKey(Company, related_name='documents')
     title = models.CharField(max_length=500, null=False, blank=False)
 
     class Meta:

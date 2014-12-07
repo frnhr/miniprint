@@ -2614,6 +2614,7 @@ shortcodes page css
     height:400px;
     border-left-color:#fff ;
     padding: 10px;
+    background-color: #f7f7f9;
 }
 #text-demo *{
     color:#000 !important;

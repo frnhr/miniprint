@@ -1,5 +1,8 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, FormView
 from discuss.models import Comment
+from .forms import CompanyForm, DocumentUpload
+from users.models import Company
+from fineprint.models import Document
 
 
 class TwitterLoginRequired(object):
@@ -25,6 +28,7 @@ class HomeView(TwitterLoginRequired, TemplateView):
 
 
 class DocumentView(TemplateView):
+
     template_name = 'web/document.html'
 
 
@@ -39,5 +43,40 @@ class AboutView(TemplateView):
 class LoginView(TemplateView):
     template_name = 'web/login.html'
 
-class UploadView(TemplateView):
+class UploadView(TwitterLoginRequired,FormView):
     template_name = 'web/upload.html'
+    success_url = '/profile/'
+    form_class = DocumentUpload
+
+    def get_context_data(self, **kwargs):
+        context = super(UploadView, self).get_context_data(**kwargs)
+        return context
+
+    def form_valid(self,form):
+        company = self.request.user.company
+        title   = form.cleaned_data['title']
+        new_document = Document(company=company,title=title)
+        new_document.save()
+        return super(UploadView, self).form_valid(form)
+
+
+class ProfileView(TwitterLoginRequired,FormView):
+    template_name = 'web/profile.html'
+    success_url = '/profile/'
+    form_class = CompanyForm
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileView, self).get_context_data(**kwargs)
+        try:
+            context['company'] = self.request.user.company
+        except:
+            context['company'] = None
+        if context['company']:
+            context['documents'] = self.request.user.company.get_documents()
+        return context
+
+    def form_valid(self,form):
+        company_name = form.cleaned_data['company_name']
+        new_company = Company(user=self.request.user,name=company_name)
+        new_company.save()
+        return super(ProfileView, self).form_valid(form)
