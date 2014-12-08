@@ -128,7 +128,7 @@
                             </div>
                         </div>
                         <h3>{{ comment.chunk.document.company.name }} - {{ comment.chunk.document.title }}</h3>
-                        <a href="#">Opinions <span class="badge">{{ comment.chunk.document.comments_count }}</span></a>
+                        <a href="{% url 'chunk' comment.chunk.id %}">Opinions <span class="badge">{{ comment.chunk.document.comments_count }}</span></a>
                     </div>
 
                     <div class="col-xs-9 ">
@@ -137,7 +137,6 @@
                                 <h4>{{ comment.user.get_full_name }}</h4>
                                 <h4>{{ comment.timestamp|date:'DATETIME_FORMAT' }}</h4>
                                 <p>{{ comment.render }}</p>
-                                <a href="{% url 'new_comment' comment.id 0 %}">Add your description</a>
                             </div>
                         </div>
                     </div>
