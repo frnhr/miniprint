@@ -1,19 +1,27 @@
 {% extends 'web/main.html' %}
+
+{% block scripts %}
+        {{ block.super }}
+        <script src="{{ STATIC_URL }}web/js/markdown/lib/marked.js"></script>
+{% endblock %}
+
+
+{% block body_class %}homepage{% endblock %}
+
 {% block page_content %}
-    {% csrf_token %}
     <section id="main-search">
         <div class="container">
             <div class="center wow fadeInDown">
                 <h2>Find company legal documents</h2>
                 {% block please_twitter_login %}{% endblock %}
-                <form>
+                <form action="{% url 'search' %}#h2" method="post">
+                    {% csrf_token %}
                 	<div class="input-group">
-      					<input type="text" placeholder="Comany name" class="form-control">
+      					<input type="text" placeholder="Comany name" class="form-control" name="{{ form.company_name.name }}" id="{{ form.company_name.auto_id}}" value="{{ form.company_name.value|default:'' }}">
 					      <span class="input-group-btn">
-					        <button class="btn btn-default" type="button">Search!</button>
+					        <button type class="btn btn-default" type="submit">Search!</button>
 					      </span>
 				    </div><!-- /input-group -->
-
                 </form>
             </div>
 
@@ -69,7 +77,7 @@
                         <div class="feature-wrap">
                             <i class="fa fa-bullhorn"></i>
                             <h2>Share opinion</h2>
-                            <h3>Summurize part of legal documents in your own words. The more funny the better. </h3>
+                            <h3>Summurize part of legal documents in your own words. The funnier the better. </h3>
                         </div>
                     </div><!--/.col-md-4-->
 
@@ -77,7 +85,7 @@
                         <div class="feature-wrap">
                             <i class="fa fa-thumbs-down"></i>
                             <h2>Rate legal documents</h2>
-                            <h3>Indicate how friendly legal documents are for company customers</h3>
+                            <h3>Indicate how friendly legal documents are for the end user</h3>
                         </div>
                     </div><!--/.col-md-4-->
 
@@ -85,7 +93,7 @@
                         <div class="feature-wrap">
                             <i class="fa fa-folder-open"></i>
                             <h2>Organise your licences</h2>
-                            <h3>Keep legal documents you agreed to on one place</h3>
+                            <h3>Keep in one place all legal documents you agreed to</h3>
                         </div>
 
                 </div>
@@ -107,23 +115,23 @@
 
             {% for comment in trending %}
                 <div class="row">
-                    <div class="col-xs-3 ">
-                        <div class="progress">
+                    <div class="col-xs-4 ">
+
+                        <div class="progress" data-toggle="tooltip" data-placement="top" title="User friendliness of legal document">
                             <div style="width: {{ comment.chunk.document.percentage }}%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="{{ comment.chunk.document.percentage }}" role="progressbar" class="progress-bar color1">
                                 <span class="bar-width">{{ comment.chunk.document.percentage }}%</span>
                             </div>
                         </div>
                         <h3>{{ comment.chunk.document.company.name }} - {{ comment.chunk.document.title }}</h3>
-                        <a href="#">Opinions <span class="badge">{{ comment.chunk.document.comments_count }}</span></a>
+                        <a href="{% url 'chunk' comment.chunk.id %}">Opinions <span class="badge">{{ comment.chunk.document.comments_count }}</span></a>
                     </div>
 
-                    <div class="col-xs-9 ">
+                    <div class="col-xs-8 ">
                         <div class="media comment_section">
                             <div class="media-body post_reply_comments">
                                 <h4>{{ comment.user.get_full_name }}</h4>
                                 <h4>{{ comment.timestamp|date:'DATETIME_FORMAT' }}</h4>
                                 <p>{{ comment.render }}</p>
-                                <a href="#">Add your description</a>
                             </div>
                         </div>
                     </div>
@@ -131,29 +139,7 @@
                 </div><!--/.row-->
             {% endfor %}{# comment in trending #}
 
-            <div class="row">
-                <div class="col-xs-3 ">
-
-                <div class="progress">
-                <div style="width: 85%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar  color1">
-                                <span class="bar-width">85%</span>
-                              </div>
                 </div>
-                                <h2>Coursera student TOS</h2>
-                </div>
-				<div class="col-xs-9 ">
-				<div class="media comment_section">
 
-                            <div class="media-body post_reply_comments">
-                                <h3>Marsh</h3>
-                                <h4>NOVEMBER 9, 2013 AT 9:15 PM</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud</p>
-                                <a href="#">Add your description</a>
-                            </div>
-                        </div>
-                </div>
-            </div><!--/.row-->
-
-        </div><!--/.container-->
     </section><!--/#recent-works-->
 {% endblock %}

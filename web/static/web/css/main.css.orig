@@ -7,9 +7,6 @@
 #logo{
     margin-top:10px;
 }
-#logo a, #logo a:hover {
-    color:#fff;
-}
 body {
   background: #fff;
   font-family: 'Open Sans', sans-serif;
@@ -569,7 +566,6 @@ input.search-form:hover {
   height: 110px;
   width: 110px;
   margin: 3px;
-  margin-top: 17px;
   border-radius: 100%;
   line-height: 110px;
   text-align:center;
@@ -2557,20 +2553,26 @@ shortcodes page css
   text-align:center;
 }
 
+.upvote, .downvote{
+  font-size:22px;
+}
+<<<<<<< HEAD
 .vote_link{
     cursor: pointer;
 }
-
-.upvote, .downvote{
-  font-size:22px;
-  cursor: pointer;
+.voted_this{
+    color: #2d7da4;
 }
+=======
+
 .upvote.voted_this {
   color: #007D2E;
 }
 .downvote.voted_this {
   color: rgb(197, 45, 47);
 }
+
+>>>>>>> 3d020cdbbd81922b922c146931c0569f37cfafca
 .post-reply .upvote, .post-reply .downvote{
   font-size:15px;
 }
@@ -2579,8 +2581,7 @@ shortcodes page css
   font-size:28px;
   line-height:28px;
   font-weight:100;
-  margin-bottom:10px;
-  min-height: 60px;
+  margin-bottom:25px;
 }
 .row .post-reply {
   border-top: 1px dotted #eeeeee;
@@ -2633,7 +2634,6 @@ shortcodes page css
 }
 .post-reply{
   padding-right:0px;
-  padding-top: 15px;
 }
 
 #document-upload textarea{
@@ -2663,35 +2663,34 @@ shortcodes page css
     color:#000 !important;
     font-size: 14px;
 }
-#text-demo h1, .chunk-text h1{
+#text-demo h1{
     text-align: center;
     font-size:18px;
     font-weight: 700;
     margin: 0px 0px 1px 0px;
     text-transform: uppercase;
-    color:rgb(78,78,78);
 }
-#text-demo h2, .chunk-text h2{
+#text-demo h2{
     text-align: center;
     font-size:18px;
     font-weight: 600;
     margin: 0px 0px 1px 0px;
 }
 
-#text-demo h3, .chunk-text h3{
+#text-demo h3{
     text-align: center;
     font-size:16px;
     font-weight: 500;
     margin: 0px 0px 3px 0px;
 }
 
-#text-demo h4, .chunk-text h4{
+#text-demo h4{
     text-align: center;
     font-size:14px;
     font-weight: 400;
     margin: 0px 0px 5px 0px;
 }
-#text-demo h5,#text-demo h6, .chunk-text h5, .chunk-text h5{
+#text-demo h5,#text-demo h6{
     text-align: left;
     font-size:14px;
     font-weight: 400;
@@ -2722,15 +2721,6 @@ section#legal .media.long-description .score_readonly {
   color: #c5c5c5;
   float: right;
 }
-.from_document_link {
-  color: #c5c5c5;
-  line-height: 36px;
-  display: inline-block;
-  vertical-align: bottom;
-}
-section#legal .score_readonly {
-  color: #c5c5c5;
-}
 section#legal .media.long-description .score {
   color: #000000;
 }
@@ -2759,20 +2749,4 @@ section#legal .media.long-description.bad .score {
 
 #about-company{
     font-size: 140px;
-}
-
-section#profile table {
-  border-top: 1px solid #dddddd;
-  margin-top: 15px;
-}
-section#profile table tr td {
-  border-top: none;
-  border-bottom: 1px solid #dddddd;
-}
-.summary.well{
-    overflow: hidden;
-    padding-bottom: 0px;
-}
-.comment-preview{
-    padding-bottom:19px !important;
 }

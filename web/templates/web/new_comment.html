@@ -1,0 +1,49 @@
+{% extends 'web/main.html' %}
+
+{% block scripts %}
+    {% if chunk %}
+        <script src="{{ STATIC_URL }}web/js/markdown/lib/marked.js"></script>
+        <script type="text/javascript">
+            document.addEventListener("DOMContentLoaded", function (event) {
+                markedData = marked($('.chunk-text').text());
+                $('.chunk-text').html(markedData);
+            });
+        </script>
+    {% endif %}
+{% endblock %}
+
+{% block page_content %}
+<section id="new-comment">
+    <div class="container">
+
+        <h2>New comment</h2>
+        <hr />
+        <div class="summary well comment-preview ">
+                    <div class="chunk-text">{% if chunk %}<div class=".chunk-text">{{ chunk.text }}</div>{% else %}{{ text }}{% endif %}</div>
+                    {% if chunk %}
+                    <div class="pull-right">
+						<span class="from_document_link">
+                            {{ chunk.type_full_str }}
+                            from document:
+                            <a href="{% url 'document' chunk.document.id %}">{{ chunk.document.company.name }} - {{ chunk.document.title }}</a></span>
+
+
+					</div>
+                    {% endif %}
+
+         </div>
+        <hr />
+        <div class="row">
+            <div class="col-sm-8">
+            <form action="" method="post">
+                        <textarea class="form-control"  name="{{form.text.name }}" id="id_text" ></textarea>
+                <br />
+                        <input type="submit" class="btn btn-default" value="Post">
+                        {% csrf_token %}
+                    </form>
+
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

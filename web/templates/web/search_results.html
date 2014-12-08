@@ -1,0 +1,46 @@
+{% extends 'web/main.html' %}
+{% block scripts %}
+        <script type="text/javascript">
+            document.addEventListener("DOMContentLoaded", function (event) {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
+{% endblock %}
+{% block page_content %}
+    <section id="main-search">
+        <div class="container">
+            <div class="center wow fadeInDown">
+                <h2 id="h2">Find company legal documents</h2>
+                {% block please_twitter_login %}{% endblock %}
+                <form action="" method="post">
+                    {% csrf_token %}
+                	<div class="input-group">
+      					<input type="text" placeholder="Comany name" class="form-control" name="{{ form.company_name.name }}" id="{{ form.company_name.auto_id}}" value="{{ form.company_name.value|default:'' }}">
+					      <span class="input-group-btn">
+					        <button type class="btn btn-default" type="submit">Search!</button>
+					      </span>
+				    </div><!-- /input-group -->
+                </form>
+            </div>
+
+        </div><!--/.container-->
+    </section><!--/#main-search-->
+
+    <section id="search_results">
+        <div class="container">
+            <h2>Search results</h2>
+            <hr />
+            <div class="col-sm-7">
+                {% for company in results %}
+
+                    <div class="list-group">
+                      <li class="list-group-item active"> {{ company.name }}</li>
+                    {% for document in company.get_documents %}
+                        <a href="{% url 'document' document.id %}" class="list-group-item"><span class="label label-default" data-toggle="tooltip" data-placement="top" title="User friendliness of legal document">{{ document.percentage }}%</span> {{ document.company.name }} - {{ document.title }}</a>
+                    {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

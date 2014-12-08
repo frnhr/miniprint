@@ -21,7 +21,26 @@ class CommentAdmin(MPTTModelAdmin):
         return document.company
 
 
+class ChunkVoteAdmin(admin.ModelAdmin):
+    model = ChunkVote
+    list_display = ('id', 'score', 'user', 'target', 'target_id', )
+    list_filter = ('target', )
+
+    def target_id(self, obj):
+        return obj.target.id
+
+
+class CommentVoteAdmin(admin.ModelAdmin):
+    model = CommentVote
+    list_display = ('id', 'score', 'user', 'target', 'target_id', )
+    list_filter = ('target', )
+
+    def target_id(self, obj):
+        return obj.target.id
+
+
 admin_register(CommentAdmin)
-admin.site.register(CommentVote)
-admin.site.register(ChunkVote)
+admin_register(ChunkVoteAdmin)
+admin_register(CommentVoteAdmin)
+
 

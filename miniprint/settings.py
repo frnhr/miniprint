@@ -31,7 +31,7 @@ DEBUG = settings_local.DEBUG
 TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = settings_local.ALLOWED_HOSTS
-
+MAIN_HOST = settings_local.MAIN_HOST
 
 # Application definition
 
@@ -63,6 +63,20 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ] + settings_local.ADDITIONAL_MIDDLEWARE_CLASSES
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.request",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    'miniprint.context_processors.main_host',
+)
+
+
+
 
 ROOT_URLCONF = 'miniprint.urls'
 

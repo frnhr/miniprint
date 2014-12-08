@@ -48,18 +48,19 @@ class ChunkVote(VoteModel, models.Model):
 class Comment(MPTTModel, DiscussScoreMixin):
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
     chunk = models.ForeignKey('fineprint.Chunk', null=True, blank=True, related_name='comments')
-    user = models.ForeignKey('users.User')
+    user = models.ForeignKey('users.User', related_name='comments')
     text = models.CharField(max_length=255, null=False, blank=False)
     timestamp = models.DateTimeField()
 
     class MPTTMeta:
-        order_insertion_by = ['discuss_score', ]
+        order_insertion_by = ['-discuss_score', '-timestamp', ]
+
+    class Meta:
+        ordering = ['-discuss_score', '-timestamp', ]
 
     def save(self, *args, **kwargs):
         if not self.timestamp:
             self.timestamp = timezone.now()
-        if self.chunk and self.parent:
-            raise ValueError('Cant define both parent and chunk')
         return super(Comment, self).save(*args, **kwargs)
 
     def short_text(self):
@@ -73,11 +74,11 @@ class Comment(MPTTModel, DiscussScoreMixin):
 
     @classmethod
     def get_trending(cls):
-        ago_24h = timezone.now() - timedelta(days=1)
+        past_limit = timezone.now() - timedelta(days=10)
         limit = 3
         min_score = 2
         trending = (Comment.objects
-                    .filter(timestamp__gte=ago_24h, parent=None)
+                    .filter(timestamp__gte=past_limit, parent=None)
                     .values('chunk__document')
                     .annotate(max_score=models.Max('discuss_score'))
                     .filter(max_score__gte=min_score)

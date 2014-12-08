@@ -1,1 +1,34 @@
-{% extends 'web/about.html' %}
+{% extends 'web/main.html' %}
+
+{% block page_content %}
+
+    <section id="about">
+        <div class="container">
+            <h2>About</h2>
+            <hr />
+            <div class="row">
+                <div class="col-sm-6">
+                    <p>MINIPRINT is application made for community to summarize long legal paragraphs in their own words. While providing summaries they can rate each legal paragraph is it good or bad for customers/users as well as rate other people’s summaries and start discussions about them.</p>
+                </div>
+                <div class="col-sm-6 text-center">
+                    <span class="fa fa-comments" id="about-chat" ></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 text-center">
+                    <span class="glyphicon glyphicon-cloud-upload" id="about-company" ></span>
+
+                </div>
+                <div class="col-sm-6 ">
+                    <p>Companies can upload their legal documents on MINIPRINT where they can manage them and integrate them on their website. When their customers register to their site legal documents will be prompted in engaging and easy to digest manner.</p>
+                </div>
+            </div>
+            <h2>Process</h2>
+            <hr />
+            <h3><span class="label label-default">1</span>  Company uploads their legal document on MINIPRINT</h3>
+            <h3><span class="label label-default">2</span>  Document get parsed into paragraphs. </h3>
+            <h3><span class="label label-default">3</span>  MINIPRINT users summarize each paragraph in short and meaningful way</h3>
+            <h3><span class="label label-default">4</span>  Trough voting process, we can detect harmful parts of legal documents and select best summaries for each part </h3>
+        </div>
+    </section>
+{% endblock %}

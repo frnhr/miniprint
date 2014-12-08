@@ -1,7 +1,7 @@
 from django.core.exceptions import PermissionDenied
 from django.http.response import JsonResponse, HttpResponseForbidden, HttpResponseBadRequest, HttpResponseNotFound
 from django.views.generic import View
-from http_status import HttpResponseCreated, HttpResponseAccepted
+from http_status import HttpResponseCreated, HttpResponse
 from fineprint.models import Chunk
 from .models import ChunkVote, CommentVote
 
@@ -51,7 +51,7 @@ class VoteView(View):
                 'error': '{}: {}'.format(type(e).__name__, e)
             }
         else:
-            status = HttpResponseCreated if created else HttpResponseAccepted
+            status = HttpResponseCreated if created else HttpResponse
             response = {
                 'success': True,
                 'vote_id': vote.id,

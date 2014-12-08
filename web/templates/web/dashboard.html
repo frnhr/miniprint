@@ -1,0 +1,82 @@
+{% extends 'web/main.html' %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script type="text/javascript">
+        jQuery(function($){
+            $('.show_embed').on('click', function(event){
+                event.preventDefault();
+                $target = $(this).parent().find('.embed');
+                if ($target.height() > 50) {
+                    $target.stop().animate({'height': 0});
+                } else {
+                    $target.stop().css({'height': 'auto'});
+                    var h = $target.height();
+                    $target.stop().css({'height': 0});
+                    $target.stop().animate({'height': h});
+                }
+            });
+        });
+    </script>
+{% endblock extrahead %}
+
+{% block page_content %}
+    <section id="profile">
+    	<div class="container">
+	    	<h2>Hey, <strong>{{ request.user.get_full_name }}</strong></h2>
+	        <div class="col-sm-6">
+                Legal documents you agreed on
+                <table class="table">
+                    {% for agreement in request.user.agreements.all %}
+                        <tr><td><a href="{% url 'document' agreement.document.id %}">{{ agreement.document.company.name }} - {{ agreement.document.title }}</td></tr>
+                    {% empty %}
+                        <tr><td><em>no documents here yet...</em></td></tr>
+                    {% endfor %}
+                </table>
+	        </div>
+            <div class="col-sm-6">
+                {% if  not company %}
+                Do you represent company and want upload your legal documents here?
+                <hr/>
+
+                <form class="form-inline" role="form" action="" method="post">
+                  <div class="form-group">
+                    <div class="input-group">
+                        {{ form.company_name }}
+                      <!-- <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Enter company name"> -->
+                    </div>
+                  </div>
+
+                  <button type="submit" class="btn btn-default">Add company</button>
+                    {% csrf_token %}
+                </form>
+                {% else %}
+                Legal documents for company {{ company.name }}
+                    <table class="table">
+                    {% for document in documents   %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'document' document.id %}"> {{ document.title }}</a>
+                            </td>
+                            <td>
+                                <a href="#" class="show_embed"><em>view embed code</em></a>
+                                <div class="embed" style="overflow: hidden; height: 0;">
+                                    <textarea rows="5" cols="20" style="width: 280px;">{{ document.get_code }}</textarea>
+                                    <br />
+                                    <p style="width: 280px; font-style: italic;">
+                                        Replace your "I agree" checkbox with this code. We will render the checkbox and a link to your legal document.
+                                    </p>
+                                </div>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="2"><em>no documents here yet...</em></td></tr>
+                    {% endfor %}
+                    </table>
+                    <a href="{% url 'upload' %}" class="btn btn-default">Add document</a>
+                {% endif %}
+	        </div>
+        </div>
+
+    </section>
+{% endblock %}

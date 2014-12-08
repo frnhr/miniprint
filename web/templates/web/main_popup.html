@@ -1,0 +1,16 @@
+{% extends 'web/main.html' %}
+
+{% block body_class %}popup{% endblock %}
+
+
+{% block header %}
+    <div style="text-align: right; font-size: 16px; font-weight: bold; padding: 20px 20px 0 0;">
+        <a href="#" onclick="window.close(); return false">Close X</a>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <div style="text-align: right; font-size: 16px; font-weight: bold; padding: 20px;">
+        <a href="#" onclick="window.close(); return false">Close X</a>
+    </div>
+{% endblock %}

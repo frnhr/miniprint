@@ -2,7 +2,6 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 from django.utils import timezone
 
-
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None):
         """
@@ -81,3 +80,7 @@ class Company(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def get_documents(self):
+        return self.documents.all()
+

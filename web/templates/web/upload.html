@@ -1,26 +1,77 @@
 {% extends 'web/main.html' %}
 
 {% block page_content %}
-<script src="{{ STATIC_URL }}web/js/markdown/lib/marked.js"></script>
-<script type="text/javascript">
+    {% block scripts %}
+        <script src="{{ STATIC_URL }}web/js/jquery.autosize.min.js"></script>
+        <script src="{{ STATIC_URL }}web/js/markdown/lib/marked.js"></script>
+        <script type="text/javascript">
 
-document.addEventListener("DOMContentLoaded", function(event) {
-     $('textarea').keypress(function(){
+            document.addEventListener("DOMContentLoaded", function (event) {
 
-  markedData = marked($('textarea').val())
-  $('#text-demo').html(markedData);
-});
-});
-</script>
+                markedData = marked($('textarea').val())
+                $('#text-demo').html(markedData).height($('textarea').height())
+
+                $('textarea').autosize();
+                $('textarea').on('change input', function () {
+                    markedData = marked($('textarea').val())
+                    $('#text-demo').html(markedData).height($('textarea').height())
+                });
+
+            });
+        </script>
+    {% endblock %}
     <section id="document-upload">
+
         <div class="container">
-            <div class="col-sm-6">
+            <h2>Upload your legal document</h2>
+            <hr/>
+            <div class="col-sm-12">
 
-                <textarea rows="10"></textarea>
+                <form action="" method="post" class="form-horizontal">
+                    <div class="form-group {% if form.title.errors %}has-error{% endif %}">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-3 control-label">Document title</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="{{ form.title.auto_id }}" name="{{ form.title.name }}" value="{{ form.title.value|default:""|escape }}" placeholder="" />
+                            </div>
+                        </div>
+                        {% if form.title.errors %}
+                            <div class="text-danger col-sm-7 col-sm-push-3">
+                                {{ form.title.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="">
+                        <div class="col-sm-12 form-group {% if form.text.errors %}has-error{% endif %}">
+                            <label for="{{ form.text.auto_id }}" class="col-sm-12 control-label" style="text-align: left;">
+                                Document text
+                                <span style="color: #888888; font-size: 11px; font-weight: normal; margin-left: 2em;">
+                                    * pro tip: use markdown
+                                </span>
+                            </label>
+                            {% if form.text.errors %}
+                                <div class="text-danger col-sm-12">
+                                    {{ form.text.errors }}
+                                </div>
+                            {% endif %}
+                            <div class="col-sm-6" style="padding-right: 0;">
+                                <textarea class="form-control"
+                                          rows="30"
+                                          id="{{ form.text.auto_id }}"
+                                          name="{{ form.text.name }}"
+                                        >{{ form.text.value|default:""|escape }}
+                                </textarea>
+                            </div>
+                            <div class="col-sm-6" style="padding-left: 0;" id="text-demo"></div>
+                        </div>
+                    </div>
+                    <div class="" style="clear: both;">
+                        <input type="submit" class="btn btn-default" value="Upload document">
+                    </div>
+                    {% csrf_token %}
+                </form>
             </div>
-        <div class="col-sm-6" id="text-demo"></div>
 
-     </div>
-    </div>
+        </div>
     </section>
 {% endblock %}

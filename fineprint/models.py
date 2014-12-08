@@ -1,22 +1,31 @@
 from collections import namedtuple
+from string import rstrip
 from django.db import models
+from django.utils import timezone
 from discuss.models import DiscussScoreMixin
+from remote.includes import get_code
 from users.models import Company
 from discuss.models import Comment, ChunkVote
 
 
 class Document(models.Model):
-    company = models.ForeignKey(Company)
+    company = models.ForeignKey(Company, related_name='documents')
     title = models.CharField(max_length=500, null=False, blank=False)
+    timestamp = models.DateTimeField(null=False, blank=True)
 
     class Meta:
         verbose_name = u'Legal Document'
+
+    def save(self, *args, **kwargs):
+        if not self.timestamp:
+            self.timestamp = timezone.now()
+        return super(Document, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.title
 
     def comments_count(self):
-        return Comment.objects.filter(chunk__document=self, parent=None).count()
+        return Comment.objects.filter(chunk__document=self).count()
 
     def percentage(self):
         votes_total = ChunkVote.objects.filter(target__in=self.chunks.all())
@@ -25,8 +34,25 @@ class Document(models.Model):
         votes_up_count = votes_up.count()
         if votes_up_count == 0 or votes_total_count == 0:
             return 0
-        return int(100 * votes_up_count / votes_total_count )
+        return int(100 * votes_up_count / votes_total_count)
 
+    def parse_input(self, text):
+        self.chunks.all().delete()  # this should never actually delete anything, since we don't allow edits
+        lines = "\n".join(map(rstrip, text.split("\n")))
+        lines = lines.replace("\n\n\n", "\n\n")
+        chunks = lines.split("\n\n")
+        for i, chunk in enumerate(chunks):
+            Chunk.objects.create(
+                document=self,
+                text=chunk,
+                chunk_type=Chunk.TYPES.heading if len(chunk) < 75 else Chunk.TYPES.paragraph,
+                order=i,
+            )
+
+    def get_code(self):
+        if not self.id:
+            return ''
+        return get_code(self.id)
 
 class Chunk(DiscussScoreMixin, models.Model):
     TYPES = namedtuple('TYPES', ('heading', 'paragraph', ))._make(range(2))
@@ -48,6 +74,12 @@ class Chunk(DiscussScoreMixin, models.Model):
         else:
             return 'p'
 
+    def type_full_str(self):
+        if self.chunk_type == self.TYPES.heading:
+            return 'heading'
+        else:
+            return 'paragraph'
+
     def short_text(self):
         length = 80
         return self.text[:length] + ('...' if len(self.text) > length else '')
@@ -58,6 +90,20 @@ class Chunk(DiscussScoreMixin, models.Model):
     def comments_count(self):
         return self.comments.all().count()
 
+    def is_scorable(self):
+        return self.chunk_type == self.TYPES.paragraph
+
+    def top_comment(self):
+        try:
+            return self.comments.order_by('-discuss_score')[0]
+        except IndexError:
+            return None
+
     class Meta:
         ordering = ['order', ]
 
+
+class DocumentAgreement(models.Model):
+    document = models.ForeignKey(Document, null=False, blank=False, related_name='agreements')
+    user = models.ForeignKey('users.User', null=False, blank=False, related_name='agreements')
+    timestamp = models.DateTimeField(auto_now_add=True)
