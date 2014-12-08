@@ -3,12 +3,15 @@
 {% block page_content %}
     <section id="profile">
     	<div class="container">
-	    	<h2>Hey, <strong>pero@twitter</strong></h2>
+	    	<h2>Hey, <strong>{{ request.user.get_full_name }}</strong></h2>
 	        <div class="col-sm-6">
                 Legal documents you agreed on
-                <hr />
                 <table class="table">
-                    <tr><td>License 1</td><td>Bla bla bla bla bla</td></tr>
+                    {% for agreement in request.user.agreements.all %}
+                        <tr><td><a href="{% url 'document' agreement.document.id %}">{{ agreement.document.company.name }} - {{ agreement.document.title }}</td></tr>
+                    {% empty %}
+                        <tr><td><em>no documents here yet...</em></td></tr>
+                    {% endfor %}
                 </table>
 	        </div>
             <div class="col-sm-6">
@@ -16,7 +19,7 @@
                 Do you represent company and want upload your legal documents here?
                 <hr/>
 
-                <form class="form-inline" role="form" action="/profile/" method="post">
+                <form class="form-inline" role="form" action="" method="post">
                   <div class="form-group">
                     <div class="input-group">
                         {{ form.company_name }}
@@ -29,10 +32,18 @@
                 </form>
                 {% else %}
                 Legal documents for company {{ company.name }}
-                <hr/>
                     <table class="table">
                     {% for document in documents   %}
-                    <tr><td><a href="{% url 'document' document.id %}"> {{ document.title }}</a></td></tr>
+                        <tr>
+                            <td>
+                                <a href="{% url 'document' document.id %}"> {{ document.title }}</a>
+                            </td>
+                            <td>
+                                <a href="#"><em>view embed code</em></a>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="2"><em>no documents here yet...</em></td></tr>
                     {% endfor %}
                     </table>
                     <a href="{% url 'upload' %}" class="btn btn-default">Add document</a>

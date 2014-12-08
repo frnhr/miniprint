@@ -69,6 +69,12 @@ class Chunk(DiscussScoreMixin, models.Model):
         else:
             return 'p'
 
+    def type_full_str(self):
+        if self.chunk_type == self.TYPES.heading:
+            return 'heading'
+        else:
+            return 'paragraph'
+
     def short_text(self):
         length = 80
         return self.text[:length] + ('...' if len(self.text) > length else '')
@@ -93,6 +99,6 @@ class Chunk(DiscussScoreMixin, models.Model):
 
 
 class DocumentAgreement(models.Model):
-    document = models.ForeignKey(Document, null=False, blank=False)
-    user = models.ForeignKey('users.User', null=False, blank=False)
+    document = models.ForeignKey(Document, null=False, blank=False, related_name='agreements')
+    user = models.ForeignKey('users.User', null=False, blank=False, related_name='agreements')
     timestamp = models.DateTimeField(auto_now_add=True)

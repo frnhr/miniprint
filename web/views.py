@@ -5,7 +5,7 @@ from .forms import CompanyForm, DocumentUploadForm, CommentForm
 from users.models import Company
 from fineprint.models import Document, Chunk
 import datetime
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 
 
 class TwitterLoginRequired(object):
@@ -92,7 +92,7 @@ class DocumentView(VotedDataMixin, DetailView):
         return context
 
 
-class ChunkView(VotedDataMixin, DetailView):
+class ChunkView(TwitterLoginRequired, VotedDataMixin, DetailView):
     template_name = 'web/chunk.html'
     template_name_field = 'chunk'
     model = Chunk
@@ -118,7 +118,7 @@ class MiniprintJsView(TemplateView):
 
 class UploadView(TwitterLoginRequired, FormView):
     template_name = 'web/upload.html'
-    success_url = '/profile/'
+    success_url = reverse_lazy('dashboard')
     form_class = DocumentUploadForm
 
     def get_context_data(self, **kwargs):
@@ -136,7 +136,7 @@ class UploadView(TwitterLoginRequired, FormView):
 
 class DashboardView(TwitterLoginRequired, FormView):
     template_name = 'web/dashboard.html'
-    success_url = '/profile/'
+    success_url = reverse_lazy('dashboard')
     form_class = CompanyForm
 
     def get_context_data(self, **kwargs):
@@ -157,7 +157,7 @@ class DashboardView(TwitterLoginRequired, FormView):
         return super(DashboardView, self).form_valid(form)
 
 
-class NewCommentView(FormView):
+class NewCommentView(TwitterLoginRequired, FormView):
     template_name = 'web/new_comment.html'
     form_class = CommentForm
 

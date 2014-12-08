@@ -74,11 +74,11 @@ class Comment(MPTTModel, DiscussScoreMixin):
 
     @classmethod
     def get_trending(cls):
-        ago_24h = timezone.now() - timedelta(days=1)
+        past_limit = timezone.now() - timedelta(days=10)
         limit = 3
         min_score = 2
         trending = (Comment.objects
-                    .filter(timestamp__gte=ago_24h, parent=None)
+                    .filter(timestamp__gte=past_limit, parent=None)
                     .values('chunk__document')
                     .annotate(max_score=models.Max('discuss_score'))
                     .filter(max_score__gte=min_score)

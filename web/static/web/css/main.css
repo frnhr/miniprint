@@ -569,6 +569,7 @@ input.search-form:hover {
   height: 110px;
   width: 110px;
   margin: 3px;
+  margin-top: 17px;
   border-radius: 100%;
   line-height: 110px;
   text-align:center;
@@ -2562,6 +2563,7 @@ shortcodes page css
 
 .upvote, .downvote{
   font-size:22px;
+  cursor: pointer;
 }
 .upvote.voted_this {
   color: #007D2E;
@@ -2718,6 +2720,15 @@ section#legal .media.long-description .score_readonly {
   color: #c5c5c5;
   float: right;
 }
+.from_document_link {
+  color: #c5c5c5;
+  line-height: 36px;
+  display: inline-block;
+  vertical-align: bottom;
+}
+section#legal .score_readonly {
+  color: #c5c5c5;
+}
 section#legal .media.long-description .score {
   color: #000000;
 }
@@ -2746,4 +2757,13 @@ section#legal .media.long-description.bad .score {
 
 #about-company{
     font-size: 140px;
+}
+
+section#profile table {
+  border-top: 1px solid #dddddd;
+  margin-top: 15px;
+}
+section#profile table tr td {
+  border-top: none;
+  border-bottom: 1px solid #dddddd;
 }

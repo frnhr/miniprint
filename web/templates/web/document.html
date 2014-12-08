@@ -33,19 +33,26 @@
                                     <div class="downvote vote_link fa fa-arrow-down {% if chunk.top_comment.id in voted_comments_down %}voted_this{% endif %}" data-target_model="comment" data-target_id="{{ chunk.top_comment.id }}" data-score="-1"></div>
                                 </div>
                             {% endif %}
+<<<<<<< HEAD
                             <div class="short-description">
 
                                 {{ chunk.top_comment.text }}
                             </div>
                             <div><strong>Written by: </strong> {{ chunk.top_comment.user.get_full_name}}</div>
+=======
+                            {% if not scoring_enabled and chunk.is_scorable and chunk.top_comment  %}
+                                <span class="score_readonly">top summary on MINIPRINT:</span>
+                            {% endif %}
+                            <div class="short-description">{{ chunk.top_comment.text }}</div>
+>>>>>>> 4f265fcee856d899deb17472cc7ef6a0a4e024b7
                             {% if chunk.is_scorable %}
                                 {% if scoring_enabled  %}
-                                    <a href="#" class="btn btn-primary">Add your summary</a>
-                                {% endif %}
-                                {% if chunk.top_comment %}
-                                    <div class="other-comments"><a href="{% url 'chunk' chunk.id %}">Other comments <span class="badge">{{ chunk.comments.count }}</span></a></div>
-                                {% else %}
-                                    <div class="other-comments"><a href="{% url 'chunk' chunk.id %}">No comments yet</a></div>
+                                    <a href="{% url 'new_comment' chunk.id chunk.top_comment.id|default:'0' %}" class="btn btn-primary">Add your summary</a>
+                                    {% if chunk.top_comment %}
+                                        <div class="other-comments"><a href="{% url 'chunk' chunk.id %}">Other comments <span class="badge">{{ chunk.comments.count }}</span></a></div>
+                                    {% else %}
+                                        <div class="other-comments"><a href="{% url 'chunk' chunk.id %}">No comments yet</a></div>
+                                    {% endif %}
                                 {% endif %}
                             {% endif %}
                         </div>
@@ -65,7 +72,7 @@
                                     <div class="chunk-text">{{ chunk.text }}</div>
                                     {% if chunk.is_scorable and not scoring_enabled %}
                                         <div class="score_readonly">
-                                            paragraph score on MiniPrint:
+                                            paragraph score on MINIPRINT:
                                             <span class="score">{{ chunk.discuss_score }}</span>
                                         </div>
                                     {% endif %}
