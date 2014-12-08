@@ -3,12 +3,16 @@
 {% block page_content %}
     <section id="profile">
     	<div class="container">
-	    	<h2>Hey, <strong>pero@twitter</strong></h2>
+	    	<h2>Hey, <strong>{{ request.user.get_full_name }}</strong></h2>
 	        <div class="col-sm-6">
                 Legal documents you agreed on
                 <hr />
                 <table class="table">
-                    <tr><td>License 1</td><td>Bla bla bla bla bla</td></tr>
+                    {% for agreement in request.user.agreements.all %}
+                        <tr><td><a href="{% url 'document' agreement.document.id %}">{{ agreement.document.company.name }} - {{ agreement.document.title }}</td></tr>
+                    {% empty %}
+                        <tr><td><em>no documents here yet...</em></td></tr>
+                    {% endfor %}
                 </table>
 	        </div>
             <div class="col-sm-6">
