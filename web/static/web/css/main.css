@@ -7,6 +7,9 @@
 #logo{
     margin-top:10px;
 }
+#logo a, #logo a:hover {
+    color:#fff;
+}
 body {
   background: #fff;
   font-family: 'Open Sans', sans-serif;
@@ -2551,6 +2554,10 @@ shortcodes page css
   width:40px;
   float:left;
   text-align:center;
+}
+
+.vote_link{
+    cursor: pointer;
 }
 
 .upvote, .downvote{
