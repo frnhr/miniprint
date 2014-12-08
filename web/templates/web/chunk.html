@@ -1,6 +1,12 @@
 {% extends 'web/main.html' %}
 {% load mptt_tags %}
 
+{% block extrahead %}
+    {{ block.super }}
+    <script src="{% url 'miniprint_js' %}"></script>
+{% endblock extrahead %}
+
+
 {% block page_content %}
     <section id="legal">
  		<div class="container">
@@ -12,20 +18,20 @@
 			</div>
 
             <div class="row">
-					{% recursetree chunk.comments.all   %}
-						<div class="col-xs-12 post-reply">
-							<div class="ratings">
-								<div class="upvote fa fa-arrow-up"></div>
-								<div class="score">50</div>
-								<div class="downvote fa fa-arrow-down"></div>
-							</div>
-							<div class="short-description">{{ node.text }}</div>
-							<div class="reply-button"><a href="#">Comment summary</a></div>
-
-							{{ children }}
-
+				{% recursetree chunk.comments.all   %}
+					<div class="col-xs-12 post-reply">
+						<div class="ratings vote_wrap">
+							<div class="upvote vote_link fa fa-arrow-up {% if node.id in voted_comments_up %}voted_this{% endif %}" data-target_model="comment" data-target_id="{{ node.id }}" data-score="1"></div>
+							<div class="score">{{ node.discuss_score }}</div>
+							<div class="downvote vote_link fa fa-arrow-down {% if node.id in voted_comments_down %}voted_this{% endif %}" data-target_model="comment" data-target_id="{{ node.id }}" data-score="-1"></div>
 						</div>
-					{% endrecursetree %}
+						<div class="short-description">{{ node.text }}</div>
+						<div class="reply-button"><a href="#">Comment summary</a></div>
+
+						{{ children }}
+
+					</div>
+				{% endrecursetree %}
 			</div>
 
         </div>

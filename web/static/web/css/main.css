@@ -2555,6 +2555,13 @@ shortcodes page css
   font-size:22px;
 }
 
+.upvote.voted_this {
+  color: #007D2E;
+}
+.downvote.voted_this {
+  color: rgb(197, 45, 47);
+}
+
 .post-reply .upvote, .post-reply .downvote{
   font-size:15px;
 }
