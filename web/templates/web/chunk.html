@@ -23,18 +23,15 @@
  			<div class="row">
  				<div class="summary well ">
                     {{ chunk.text }}
-<<<<<<< HEAD
-
-=======
                     <div class="pull-right">
 						<span class="from_document_link">
                             {{ chunk.type_full_str }}
                             from document:
                             <a href="{% url 'document' chunk.document.id %}">{{ chunk.document.company.name }} - {{ chunk.document.title }}</a></span>
-                        &nbsp;&nbsp;&nbsp;
-						<a href="{% url 'new_comment' 1 0 %}" class="btn btn-primary">Add your summary</a>
+
+
 					</div>
->>>>>>> 4f265fcee856d899deb17472cc7ef6a0a4e024b7
+
                 </div>
                 <a href="{% url 'new_comment' 1 0 %}" class="btn btn-primary pull-right">Add your summary</a>
 			</div>
