@@ -4,6 +4,16 @@
     {{ block.super }}
     <script src="{% url 'miniprint_js' %}"></script>
 {% endblock extrahead %}
+{% block scripts %}
+
+        <script src="{{ STATIC_URL }}web/js/markdown/lib/marked.js"></script>
+        <script type="text/javascript">
+            document.addEventListener("DOMContentLoaded", function (event) {
+                markedData = marked($('.chunk-text').val());
+                $('.chunk-text').val(markedData);
+            });
+        </script>
+{% endblock %}
 
 {% block page_content %}
     <section id="legal">
@@ -23,10 +33,17 @@
                                     <div class="downvote vote_link fa fa-arrow-down {% if chunk.top_comment.id in voted_comments_down %}voted_this{% endif %}" data-target_model="comment" data-target_id="{{ chunk.top_comment.id }}" data-score="-1"></div>
                                 </div>
                             {% endif %}
+
+                            <div class="short-description">
+                                {{ chunk.top_comment.text }}
+                            </div>
+                            <div><strong>Written by: </strong> {{ chunk.top_comment.user.get_full_name}}</div>
+
                             {% if not scoring_enabled and chunk.is_scorable and chunk.top_comment  %}
                                 <span class="score_readonly">top summary on MINIPRINT:</span>
                             {% endif %}
-                            <div class="short-description">{{ chunk.top_comment.text }}</div>
+
+
                             {% if chunk.is_scorable %}
                                 {% if scoring_enabled  %}
                                     <a href="{% url 'new_comment' chunk.id chunk.top_comment.id|default:'0' %}" class="btn btn-primary">Add your summary</a>
@@ -51,7 +68,7 @@
                                             </div>
                                         </div>
                                     {% endif %}
-                                    {{ chunk.text }}
+                                    <div class="chunk-text">{{ chunk.text }}</div>
                                     {% if chunk.is_scorable and not scoring_enabled %}
                                         <div class="score_readonly">
                                             paragraph score on MINIPRINT:
