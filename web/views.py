@@ -76,6 +76,7 @@ class HomeView(SearchFormMixin, TwitterLoginRequired, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
         context['trending'] = Comment.get_trending()
+        context['home'] = True
         return context
 
 
@@ -99,6 +100,11 @@ class ChunkView(VotedDataMixin, DetailView):
 
 class AboutView(TemplateView):
     template_name = 'web/about.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AboutView, self).get_context_data(**kwargs)
+        context['about'] = True
+        return context
 
 
 class LoginView(TemplateView):
@@ -141,6 +147,7 @@ class DashboardView(TwitterLoginRequired, FormView):
             context['company'] = None
         if context['company']:
             context['documents'] = self.request.user.company.get_documents()
+        context['dashboard'] = True
         return context
 
     def form_valid(self, form):
