@@ -159,9 +159,6 @@ class NewCommentView(FormView):
         else:
             chunk = Chunk.objects.get(id=chunk_id)
             context['text'] = chunk.text
-        else:
-            parent = Comment.objects.get(id=parent_id)
-            context['text'] = parent.text
 
         return context
 
@@ -177,8 +174,8 @@ class NewCommentView(FormView):
         else:
             parent  = None
 
-         new_comment.parent  = parent        
-         chunk   = Chunk.objects.get(id=chunk_id)
+        new_comment.parent  = parent
+        chunk   = Chunk.objects.get(id=chunk_id)
         new_comment.chunk = chunk
 
         new_comment.user = self.request.user
