@@ -22,7 +22,16 @@
     	<div class="container">
 	    	<h2>{{ document.company.name }} - {{ document.title }}</h2>
             <div class="tos">
-                <p class="last-modified">(last modified on {{ document.timestamp|date:'DATETIME_FORMAT' }})</p>
+                <div class="col-sm-7">
+                    <p class="last-modified">(last modified on {{ document.timestamp|date:'DATETIME_FORMAT' }})</p>
+                </div>
+                <div class="col-sm-5">
+                    <div class="progress" data-toggle="tooltip" data-placement="top" title="User friendliness of legal documents">
+                        <div style="width: {{ document.percentage }}%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="{{ document.percentage }}" role="progressbar" class="progress-bar color1">
+                            <span class="bar-width">{{ document.percentage }}%</span>
+                        </div>
+                    </div>
+                </div>
                 <hr />
 
                 {% for chunk in document.chunks.all %}
