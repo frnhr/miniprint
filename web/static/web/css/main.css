@@ -2633,6 +2633,7 @@ shortcodes page css
 }
 .post-reply{
   padding-right:0px;
+  padding-top: 15px;
 }
 
 #document-upload textarea{
@@ -2662,34 +2663,35 @@ shortcodes page css
     color:#000 !important;
     font-size: 14px;
 }
-#text-demo h1{
+#text-demo h1, .chunk-text h1{
     text-align: center;
     font-size:18px;
     font-weight: 700;
     margin: 0px 0px 1px 0px;
     text-transform: uppercase;
+    color:rgb(78,78,78);
 }
-#text-demo h2{
+#text-demo h2, .chunk-text h2{
     text-align: center;
     font-size:18px;
     font-weight: 600;
     margin: 0px 0px 1px 0px;
 }
 
-#text-demo h3{
+#text-demo h3, .chunk-text h3{
     text-align: center;
     font-size:16px;
     font-weight: 500;
     margin: 0px 0px 3px 0px;
 }
 
-#text-demo h4{
+#text-demo h4, .chunk-text h4{
     text-align: center;
     font-size:14px;
     font-weight: 400;
     margin: 0px 0px 5px 0px;
 }
-#text-demo h5,#text-demo h6{
+#text-demo h5,#text-demo h6, .chunk-text h5, .chunk-text h5{
     text-align: left;
     font-size:14px;
     font-weight: 400;
@@ -2766,4 +2768,11 @@ section#profile table {
 section#profile table tr td {
   border-top: none;
   border-bottom: 1px solid #dddddd;
+}
+.summary.well{
+    overflow: hidden;
+    padding-bottom: 0px;
+}
+.comment-preview{
+    padding-bottom:19px !important;
 }

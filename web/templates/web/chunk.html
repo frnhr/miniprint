@@ -11,8 +11,8 @@
         <script src="{{ STATIC_URL }}web/js/markdown/lib/marked.js"></script>
         <script type="text/javascript">
             document.addEventListener("DOMContentLoaded", function (event) {
-                markedData = marked($('.well').val())
-                $('.well').val(markedData)
+                markedData = marked($('.chunk-text').text());
+                $('.chunk-text').html(markedData);
             });
         </script>
 {% endblock %}
@@ -22,7 +22,7 @@
  		<div class="container">
  			<div class="row">
  				<div class="summary well ">
-                    {{ chunk.text }}
+                    <div class="chunk-text">{{ chunk.text }}</div>
                     <div class="pull-right">
 						<span class="from_document_link">
                             {{ chunk.type_full_str }}

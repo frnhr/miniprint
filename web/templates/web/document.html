@@ -9,8 +9,10 @@
         <script src="{{ STATIC_URL }}web/js/markdown/lib/marked.js"></script>
         <script type="text/javascript">
             document.addEventListener("DOMContentLoaded", function (event) {
-                markedData = marked($('.chunk-text').val());
-                $('.chunk-text').val(markedData);
+                $('.chunk-text').each(function(){
+                    markedData = marked($(this).text());
+                    $(this).html(markedData);
+                });
             });
         </script>
 {% endblock %}
