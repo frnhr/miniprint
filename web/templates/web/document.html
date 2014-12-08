@@ -24,7 +24,7 @@
                                 </div>
                             {% endif %}
                             <div class="short-description">{{ chunk.top_comment.text }}</div>
-                            {% if chunk.is_scorable and chunk.top_comment %}
+                            {% if chunk.is_scorable %}
                                 {% if scoring_enabled  %}
                                     <a href="#" class="btn btn-primary">Add your summary</a>
                                 {% endif %}
