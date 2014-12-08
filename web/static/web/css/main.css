@@ -2555,6 +2555,7 @@ shortcodes page css
 
 .upvote, .downvote{
   font-size:22px;
+  cursor: pointer;
 }
 .upvote.voted_this {
   color: #007D2E;
