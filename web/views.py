@@ -46,8 +46,10 @@ class DocumentView(DetailView):
         return context
 
 
-class ChunkView(TemplateView):
+class ChunkView(DetailView):
     template_name = 'web/chunk.html'
+    template_name_field = 'chunk'
+    model = Chunk
 
 
 class AboutView(TemplateView):

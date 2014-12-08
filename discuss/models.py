@@ -53,13 +53,14 @@ class Comment(MPTTModel, DiscussScoreMixin):
     timestamp = models.DateTimeField()
 
     class MPTTMeta:
-        order_insertion_by = ['discuss_score', ]
+        order_insertion_by = ['-discuss_score', ]
+
+    class Meta:
+        ordering = ['-discuss_score', ]
 
     def save(self, *args, **kwargs):
         if not self.timestamp:
             self.timestamp = timezone.now()
-        if self.chunk and self.parent:
-            raise ValueError('Cant define both parent and chunk')
         return super(Comment, self).save(*args, **kwargs)
 
     def short_text(self):
