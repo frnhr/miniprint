@@ -1,13 +1,8 @@
 {% extends 'web/main.html' %}
 
 {% block scripts %}
-
+        {{ block.super }}
         <script src="{{ STATIC_URL }}web/js/markdown/lib/marked.js"></script>
-        <script type="text/javascript">
-            document.addEventListener("DOMContentLoaded", function (event) {
-                $('[data-toggle="tooltip"]').tooltip();
-            });
-        </script>
 {% endblock %}
 
 
