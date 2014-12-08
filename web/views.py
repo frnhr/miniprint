@@ -92,7 +92,7 @@ class DocumentView(VotedDataMixin, DetailView):
         return context
 
 
-class ChunkView(VotedDataMixin, DetailView):
+class ChunkView(TwitterLoginRequired, VotedDataMixin, DetailView):
     template_name = 'web/chunk.html'
     template_name_field = 'chunk'
     model = Chunk
@@ -157,7 +157,7 @@ class DashboardView(TwitterLoginRequired, FormView):
         return super(DashboardView, self).form_valid(form)
 
 
-class NewCommentView(FormView):
+class NewCommentView(TwitterLoginRequired, FormView):
     template_name = 'web/new_comment.html'
     form_class = CommentForm
 
