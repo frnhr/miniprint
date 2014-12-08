@@ -45,7 +45,9 @@
 							<div class="downvote vote_link fa fa-arrow-down {% if node.id in voted_comments_down %}voted_this{% endif %}" data-target_model="comment" data-target_id="{{ node.id }}" data-score="-1"></div>
 						</div>
 						<div class="short-description">{{ node.text }}</div>
-						<div class="col-sm-6">Written by: <strong> {{ node.user.get_full_name }}</strong></div>
+                        {% if node.text %}
+						    <div class="col-sm-6">Written by: <strong> {{ node.user.get_full_name }}</strong></div>
+                        {% endif %}
                         <div class="col-sm-6">
                         <div class="reply-button"><a href="{% url 'new_comment' chunk.id node.id %}">Reply</a></div>
                         </div>
