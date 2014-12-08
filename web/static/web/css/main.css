@@ -2555,6 +2555,13 @@ shortcodes page css
   font-size:22px;
 }
 
+.upvote.voted_this {
+  color: #007D2E;
+}
+.downvote.voted_this {
+  color: rgb(197, 45, 47);
+}
+
 .post-reply .upvote, .post-reply .downvote{
   font-size:15px;
 }
@@ -2565,10 +2572,23 @@ shortcodes page css
   font-weight:100;
   margin-bottom:25px;
 }
-.post-reply .short-description{
+.row .post-reply {
+  border-top: 1px dotted #eeeeee;
+}
+.row > .post-reply .short-description{
   font-size:16px;
   font-weight:normal;
   line-height:15px;
+  margin-top:25px;
+}
+
+.row > .post-reply:first-child {
+  border-top: none
+}
+.row > .post-reply:first-child > .short-description {
+  font-size:28px;
+  font-weight:100;
+  line-height:30px;
   margin-top:25px;
 }
 

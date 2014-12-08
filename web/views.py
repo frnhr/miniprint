@@ -20,6 +20,17 @@ class TwitterLoginRequired(object):
         return self.template_name
 
 
+class VotedDataMixin(object):
+    def get_context_data(self, **kwargs):
+        context = super(VotedDataMixin, self).get_context_data(**kwargs)
+        if self.request.user.is_authenticated():
+            context['voted_chunks_up'] = self.request.user.chunk_votes.filter(score=1).values_list('target_id', flat=True)
+            context['voted_chunks_down'] = self.request.user.chunk_votes.filter(score=-1).values_list('target_id', flat=True)
+            context['voted_comments_up'] = self.request.user.comment_votes.filter(score=1).values_list('target_id', flat=True)
+            context['voted_comments_down'] = self.request.user.comment_votes.filter(score=-1).values_list('target_id', flat=True)
+        return context
+
+
 class HomeView(TwitterLoginRequired, TemplateView):
     template_name = 'web/index.html'
 
@@ -29,25 +40,22 @@ class HomeView(TwitterLoginRequired, TemplateView):
         return context
 
 
-class DocumentView(DetailView):
+class DocumentView(VotedDataMixin, DetailView):
     model = Document
     template_name = 'web/document.html'
     template_name_field = 'document'
 
     def get_context_data(self, **kwargs):
         context = super(DocumentView, self).get_context_data(**kwargs)
-        if self.request.user.is_authenticated():
-            context['voted_chunks_up'] = self.request.user.chunk_votes.filter(score=1).values_list('target_id', flat=True)
-            context['voted_chunks_down'] = self.request.user.chunk_votes.filter(score=-1).values_list('target_id', flat=True)
-            context['voted_comments_up'] = self.request.user.comment_votes.filter(score=1).values_list('target_id', flat=True)
-            context['voted_comments_down'] = self.request.user.comment_votes.filter(score=-1).values_list('target_id', flat=True)
         context['scoring_enabled'] = False if 'remote' in self.request.GET else True
         context['extends_template_name'] = 'web/main_popup.html' if 'remote' in self.request.GET else 'web/main.html'
         return context
 
 
-class ChunkView(TemplateView):
+class ChunkView(VotedDataMixin, DetailView):
     template_name = 'web/chunk.html'
+    template_name_field = 'chunk'
+    model = Chunk
 
 
 class AboutView(TemplateView):
