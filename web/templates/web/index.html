@@ -137,7 +137,7 @@
                                 <h4>{{ comment.user.get_full_name }}</h4>
                                 <h4>{{ comment.timestamp|date:'DATETIME_FORMAT' }}</h4>
                                 <p>{{ comment.render }}</p>
-                                <a href="{% url 'new_comment' comment.id 0 %}">Add your description</a>
+                                <a href="{% url 'new_comment' comment.chunk_id 0 %}">Add your description</a>
                             </div>
                         </div>
                     </div>

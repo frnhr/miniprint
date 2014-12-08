@@ -172,7 +172,7 @@ class NewCommentView(TwitterLoginRequired, FormView):
             context['text'] = parent.text
         else:
             chunk = Chunk.objects.get(id=chunk_id)
-            context['text'] = chunk.text
+            context['chunk'] = chunk
 
         return context
 
