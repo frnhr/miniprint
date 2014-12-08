@@ -1,4 +1,4 @@
-{% extends 'web/main.html' %}
+{% extends extends_template_name %}
 
 {% block extrahead %}
     {{ block.super }}
@@ -16,16 +16,18 @@
                 {% for chunk in document.chunks.all %}
                     <div class="row">
                         <div class="col-xs-5 short">
-                            {% if chunk.is_scorable and chunk.top_comment %}
+                            {% if scoring_enabled and chunk.is_scorable and chunk.top_comment %}
                                 <div class="ratings vote_wrap">
                                     <div class="upvote vote_link fa fa-arrow-up {% if chunk.top_comment.id in voted_comments_up %}voted_this{% endif %}" data-target_model="comment" data-target_id="{{ chunk.top_comment.id }}" data-score="1"></div>
                                     <div class="score">{{ chunk.top_comment.discuss_score }}</div>
                                     <div class="downvote vote_link fa fa-arrow-down {% if chunk.top_comment.id in voted_comments_down %}voted_this{% endif %}" data-target_model="comment" data-target_id="{{ chunk.top_comment.id }}" data-score="-1"></div>
                                 </div>
-                                <div class="short-description">{{ chunk.top_comment.text }}</div>
                             {% endif %}
-                            {% if chunk.is_scorable %}
-                                <a href="#" class="btn btn-primary">Add your summary</a>
+                            <div class="short-description">{{ chunk.top_comment.text }}</div>
+                            {% if chunk.is_scorable and chunk.top_comment %}
+                                {% if scoring_enabled  %}
+                                    <a href="#" class="btn btn-primary">Add your summary</a>
+                                {% endif %}
                                 {% if chunk.top_comment %}
                                     <div class="other-comments"><a href="#">Other comments <span class="badge">42</span></a></div>
                                 {% else %}
@@ -37,7 +39,7 @@
                         <div class="col-xs-7 ">
                             <div class="media long-description">
                                 <div class="media-body">
-                                    {% if chunk.is_scorable %}
+                                    {% if scoring_enabled and chunk.is_scorable %}
                                         <div class="media-body categorization">
                                             <div class="ratings vote_wrap">
                                                 <div class="upvote vote_link fa fa-arrow-up {% if chunk.id in voted_chunks_up %}voted_this{% endif %}" data-target_model="chunk" data-target_id="{{ chunk.id }}" data-score="1"></div>
