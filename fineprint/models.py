@@ -1,4 +1,5 @@
 from collections import namedtuple
+from string import rstrip
 from django.db import models
 from django.utils import timezone
 from discuss.models import DiscussScoreMixin
@@ -32,7 +33,20 @@ class Document(models.Model):
         votes_up_count = votes_up.count()
         if votes_up_count == 0 or votes_total_count == 0:
             return 0
-        return int(100 * votes_up_count / votes_total_count )
+        return int(100 * votes_up_count / votes_total_count)
+
+    def parse_input(self, text):
+        self.chunks.all().delete()  # this should never actually delete anything, since we don't allow edits
+        lines = "\n".join(map(rstrip, text.split("\n")))
+        lines = lines.replace("\n\n\n", "\n\n")
+        chunks = lines.split("\n\n")
+        for i, chunk in enumerate(chunks):
+            Chunk.objects.create(
+                document=self,
+                text=chunk,
+                chunk_type=Chunk.TYPES.heading if len(chunk) < 75 else Chunk.TYPES.paragraph,
+                order=i,
+            )
 
 
 class Chunk(DiscussScoreMixin, models.Model):

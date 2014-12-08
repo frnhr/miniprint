@@ -63,7 +63,7 @@ class MiniprintJsView(TemplateView):
     content_type = 'text/javascript'
 
 
-class UploadView(TwitterLoginRequired,FormView):
+class UploadView(TwitterLoginRequired, FormView):
     template_name = 'web/upload.html'
     success_url = '/profile/'
     form_class = DocumentUploadForm
@@ -72,15 +72,16 @@ class UploadView(TwitterLoginRequired,FormView):
         context = super(UploadView, self).get_context_data(**kwargs)
         return context
 
-    def form_valid(self,form):
-        company = self.request.user.company
-        title   = form.cleaned_data['title'].capitalize()
+    def form_valid(self, form):
+        company = Company.objects.get_or_create(user=self.request.user)[0]  # (obj, created)[0]
+        title = form.cleaned_data['title'].capitalize()
         new_document = Document(company=company,title=title)
         new_document.save()
+        new_document.parse_input(form.cleaned_data['text'])
         return super(UploadView, self).form_valid(form)
 
 
-class DashboardView(TwitterLoginRequired,FormView):
+class DashboardView(TwitterLoginRequired, FormView):
     template_name = 'web/dashboard.html'
     success_url = '/profile/'
     form_class = CompanyForm
@@ -95,7 +96,7 @@ class DashboardView(TwitterLoginRequired,FormView):
             context['documents'] = self.request.user.company.get_documents()
         return context
 
-    def form_valid(self,form):
+    def form_valid(self, form):
         company_name = form.cleaned_data['company_name'].capitalize()
         new_company = Company(user=self.request.user,name=company_name)
         new_company.save()
@@ -111,7 +112,7 @@ class SearchView(FormView):
         context = super(SearchView, self).get_context_data(**kwargs)
         return context
 
-    def form_valid(self,form):
+    def form_valid(self, form):
         company_name = form.cleaned_data['company_name']
         results = Company.objects.filter(name__icontains=company_name)
         return self.render_to_response(self.get_context_data(form=form, results=results))
