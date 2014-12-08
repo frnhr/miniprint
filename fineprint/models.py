@@ -69,6 +69,12 @@ class Chunk(DiscussScoreMixin, models.Model):
         else:
             return 'p'
 
+    def type_full_str(self):
+        if self.chunk_type == self.TYPES.heading:
+            return 'heading'
+        else:
+            return 'paragraph'
+
     def short_text(self):
         length = 80
         return self.text[:length] + ('...' if len(self.text) > length else '')

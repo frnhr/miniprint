@@ -2719,6 +2719,12 @@ section#legal .media.long-description .score_readonly {
   color: #c5c5c5;
   float: right;
 }
+.from_document_link {
+  color: #c5c5c5;
+  line-height: 36px;
+  display: inline-block;
+  vertical-align: bottom;
+}
 section#legal .score_readonly {
   color: #c5c5c5;
 }
