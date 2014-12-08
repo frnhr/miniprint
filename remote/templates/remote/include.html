@@ -1,4 +1,4 @@
 {% spaceless %}
-    <script type="text/javascript" src="{% url 'remote_script_include' document_id %}"></script>
+    <script type="text/javascript" src="http://{{ MAIN_HOST }}{% url 'remote_script_include' document_id %}?checkbox_name=agreed"></script>
     <div id="miniprint_container" class="miniprint_container"></div>
 {% endspaceless %}

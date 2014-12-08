@@ -148,6 +148,7 @@ class DashboardView(TwitterLoginRequired, FormView):
         if context['company']:
             context['documents'] = self.request.user.company.get_documents()
         context['dashboard'] = True
+        context['home_url'] = self.request.build_absolute_uri('/')
         return context
 
     def form_valid(self, form):

@@ -6,7 +6,7 @@ jQuery(function($){
     {% endif %}
     var $before_link = '<span class="fineprint_before_link">{{ before_link|escapejs }}</span>';
     var $after_link = '<span class="fineprint_after_link">{{ after_link|escapejs }}</span>';
-    var $link = $('<a href="">terms and conditions</a>');
+    var $link = $('<a href="{{ document_url }}">terms and conditions</a>');
     $miniprint_container = $('#miniprint_container');
     $miniprint_container
         .append($checkbox)

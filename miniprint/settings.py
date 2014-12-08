@@ -31,7 +31,7 @@ DEBUG = settings_local.DEBUG
 TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = settings_local.ALLOWED_HOSTS
-
+MAIN_HOST = settings_local.MAIN_HOST
 
 # Application definition
 
@@ -72,6 +72,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
     "django.core.context_processors.static",
     "django.core.context_processors.tz",
+    'miniprint.context_processors.main_host',
 )
 
 
