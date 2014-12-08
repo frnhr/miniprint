@@ -37,7 +37,7 @@
                         </div>
 
                         <div class="col-xs-7 ">
-                            <div class="media long-description">
+                            <div class="media long-description {% if chunk.discuss_score >= 5 %}good{% endif %} {% if chunk.discuss_score <= -2  %}bad{% endif %}">
                                 <div class="media-body">
                                     {% if scoring_enabled and chunk.is_scorable %}
                                         <div class="media-body categorization">
@@ -49,6 +49,13 @@
                                         </div>
                                     {% endif %}
                                     {{ chunk.text }}
+                                    {% if chunk.is_scorable and not scoring_enabled %}
+                                        <div class="score_readonly">
+                                            paragraph score on MiniPrint:
+                                            <span class="score">{{ chunk.discuss_score }}</span>
+                                        </div>
+                                    {% endif %}
+
                                 </div>
 
 

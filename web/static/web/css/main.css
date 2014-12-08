@@ -2619,3 +2619,29 @@ shortcodes page css
 #text-demo *{
     color:#000 !important;
 }
+
+section#legal .media.long-description {
+  padding: 10px;
+  margin: 0 -15px;
+}
+section#legal .media.long-description .score_readonly {
+  color: #c5c5c5;
+  float: right;
+}
+section#legal .media.long-description .score {
+  color: #000000;
+}
+section#legal .media.long-description.good {
+  background: #DBFDDB;
+}
+section#legal .media.long-description.good .score {
+  color: #008800;
+  font-weight: bold;
+}
+section#legal .media.long-description.bad {
+  background: #FFDBDB;
+}
+section#legal .media.long-description.bad .score {
+  color: #aa2222;
+  font-weight: bold;
+}
