@@ -29,9 +29,9 @@
                                     <a href="#" class="btn btn-primary">Add your summary</a>
                                 {% endif %}
                                 {% if chunk.top_comment %}
-                                    <div class="other-comments"><a href="#">Other comments <span class="badge">{{ chunk.comments.count }}</span></a></div>
+                                    <div class="other-comments"><a href="{% url 'chunk' chunk.id %}">Other comments <span class="badge">{{ chunk.comments.count }}</span></a></div>
                                 {% else %}
-                                    <div class="other-comments"><a href="#">No comments yet</a></div>
+                                    <div class="other-comments"><a href="{% url 'chunk' chunk.id %}">No comments yet</a></div>
                                 {% endif %}
                             {% endif %}
                         </div>

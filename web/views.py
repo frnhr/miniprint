@@ -160,12 +160,12 @@ class NewCommentView(FormView):
         chunk_id = int(self.kwargs['chunk_id'])
         context['form'] = CommentForm()
 
-        if not parent_id:
-            chunk = Chunk.objects.get(id=chunk_id)
-            context['text'] = chunk.text
-        else:
+        if parent_id:
             parent = Comment.objects.get(id=parent_id)
             context['text'] = parent.text
+        else:
+            chunk = Chunk.objects.get(id=chunk_id)
+            context['text'] = chunk.text
 
         return context
 
@@ -177,13 +177,13 @@ class NewCommentView(FormView):
         new_comment = Comment()
 
         if parent_id:
-            parent = Comment.objects.get(id=parent_id)
-            chunk_id = parent.chunk_id
-            new_comment.parent = parent
-            new_comment.chunk_id = chunk_id
+            parent  = Comment.objects.get(id=parent_id)
         else:
-            chunk = Chunk.objects.get(id=chunk_id)
-            new_comment.chunk = chunk
+            parent  = None
+
+        new_comment.parent  = parent
+        chunk   = Chunk.objects.get(id=chunk_id)
+        new_comment.chunk = chunk
 
         new_comment.user = self.request.user
         new_comment.text = text
