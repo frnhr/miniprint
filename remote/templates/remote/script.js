@@ -17,9 +17,9 @@ jQuery(function($){
     $link.on('click', function(event){
         event.preventDefault();
         window.open(
-            "http://en.wikipedia.org/wiki/Cross-site_scripting",
+            "{{ document_url }}",
             "_blank",
-            "toolbar=no, scrollbars=yes, resizable=yes, top=50, left=100, width=700, height=600"
+            "toolbar=no, scrollbars=yes, resizable=yes, top=50, left=100, width=995, height=600"
         );
     });
 

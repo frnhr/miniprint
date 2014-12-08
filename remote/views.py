@@ -10,11 +10,14 @@ class RemoteScriptView(TemplateView):
     content_type = 'application/x-javascript'
 
     def get_context_data(self, document_id, **kwargs):
+        document_id = int(document_id)
         context = super(RemoteScriptView, self).get_context_data(**kwargs)
         context['checkbox_name'] = self.request.GET.get('checkbox_name', 'false')
         if context['checkbox_name'].lower() == 'false':
             context['checkbox_name'] = False
         context['remote_check_url'] = self.request.build_absolute_uri(reverse('remote_check'))
+        context['document_url'] = '{}?remote'.format(
+            self.request.build_absolute_uri(reverse('document', kwargs={'pk': document_id})))
         context['document_id'] = document_id
         return context
 

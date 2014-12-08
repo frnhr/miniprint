@@ -118,6 +118,10 @@ body > section {
   padding: 70px 0;
 }
 
+body.popup > section {
+  padding: 0 0 10px 0;
+}
+
 .center {
   text-align: center;
   padding-bottom: 55px;
