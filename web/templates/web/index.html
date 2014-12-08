@@ -1,5 +1,17 @@
 {% extends 'web/main.html' %}
 
+{% block scripts %}
+
+        <script src="{{ STATIC_URL }}web/js/markdown/lib/marked.js"></script>
+        <script type="text/javascript">
+            document.addEventListener("DOMContentLoaded", function (event) {
+                markedData = marked($('.well').val());
+                $('.well').val(markedData);
+            });
+        </script>
+{% endblock %}
+
+
 {% block body_class %}homepage{% endblock %}
 
 {% block page_content %}
@@ -125,7 +137,7 @@
                                 <h4>{{ comment.user.get_full_name }}</h4>
                                 <h4>{{ comment.timestamp|date:'DATETIME_FORMAT' }}</h4>
                                 <p>{{ comment.render }}</p>
-                                <a href="#">Add your description</a>
+                                <a href="{% url 'new_comment' comment.id 0 %}">Add your description</a>
                             </div>
                         </div>
                     </div>

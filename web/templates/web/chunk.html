@@ -6,15 +6,26 @@
     <script src="{% url 'miniprint_js' %}"></script>
 {% endblock extrahead %}
 
+{% block scripts %}
+
+        <script src="{{ STATIC_URL }}web/js/markdown/lib/marked.js"></script>
+        <script type="text/javascript">
+            document.addEventListener("DOMContentLoaded", function (event) {
+                markedData = marked($('.well').val())
+                $('.well').val(markedData)
+            });
+        </script>
+{% endblock %}
 
 {% block page_content %}
     <section id="legal">
  		<div class="container">
  			<div class="row">
- 				<div class="summary">
+ 				<div class="summary well ">
                     {{ chunk.text }}
-					<a href="{% url 'new_comment' 1 0 %}" class="btn btn-primary pull-right">Add your summary</a>
+
                 </div>
+                <a href="{% url 'new_comment' 1 0 %}" class="btn btn-primary pull-right">Add your summary</a>
 			</div>
 
             <div class="row">
@@ -26,8 +37,10 @@
 							<div class="downvote vote_link fa fa-arrow-down {% if node.id in voted_comments_down %}voted_this{% endif %}" data-target_model="comment" data-target_id="{{ node.id }}" data-score="-1"></div>
 						</div>
 						<div class="short-description">{{ node.text }}</div>
-						<div class="reply-button"><a href="{% url 'new_comment' chunk.id node.id %}">Reply</a></div>
-
+						<div class="col-sm-6">Written by: <strong> {{ node.user.get_full_name }}</strong></div>
+                        <div class="col-sm-6">
+                        <div class="reply-button"><a href="{% url 'new_comment' chunk.id node.id %}">Reply</a></div>
+                        </div>
 						{{ children }}
 
 					</div>
