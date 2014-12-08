@@ -2757,3 +2757,12 @@ section#legal .media.long-description.bad .score {
 #about-company{
     font-size: 140px;
 }
+
+section#profile table {
+  border-top: 1px solid #dddddd;
+  margin-top: 15px;
+}
+section#profile table tr td {
+  border-top: none;
+  border-bottom: 1px solid #dddddd;
+}
