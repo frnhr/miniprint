@@ -25,7 +25,7 @@ class Document(models.Model):
         return self.title
 
     def comments_count(self):
-        return Comment.objects.filter(chunk__document=self, parent=None).count()
+        return Comment.objects.filter(chunk__document=self).count()
 
     def percentage(self):
         votes_total = ChunkVote.objects.filter(target__in=self.chunks.all())

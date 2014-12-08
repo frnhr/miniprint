@@ -36,14 +36,17 @@
                                 </div>
                             {% endif %}
 
-                            <div class="short-description">
-                                {{ chunk.top_comment.text }}
-                            </div>
-                            <div><strong>Written by: </strong> {{ chunk.top_comment.user.get_full_name}}</div>
-
                             {% if not scoring_enabled and chunk.is_scorable and chunk.top_comment  %}
                                 <span class="score_readonly">top summary on MINIPRINT:</span>
                             {% endif %}
+
+                            <div class="short-description">
+                                {{ chunk.top_comment.text }}
+                            </div>
+                            {% if chunk.top_comment %}
+                                <div><strong>Written by: </strong> {{ chunk.top_comment.user.get_full_name}}</div>
+                            {% endif %}
+
 
 
                             {% if chunk.is_scorable %}
