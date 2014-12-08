@@ -4,7 +4,9 @@
 /*************************
 *******Typography******
 **************************/
-
+#logo{
+    margin-top:10px;
+}
 body {
   background: #fff;
   font-family: 'Open Sans', sans-serif;
@@ -2554,7 +2556,12 @@ shortcodes page css
 .upvote, .downvote{
   font-size:22px;
 }
-
+.vote_link{
+    cursor: pointer;
+}
+.voted_this{
+    color: #2d7da4;
+}
 .post-reply .upvote, .post-reply .downvote{
   font-size:15px;
 }
@@ -2698,4 +2705,16 @@ section#legal .media.long-description.bad {
 section#legal .media.long-description.bad .score {
   color: #aa2222;
   font-weight: bold;
+}
+#about .row{
+    margin-bottom: 70px;
+}
+#about-chat, #about-company{
+    color:#c52d2f;
+    font-size: 180px;
+    line-height:140px;
+}
+
+#about-company{
+    font-size: 140px;
 }
