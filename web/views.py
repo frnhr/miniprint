@@ -62,7 +62,7 @@ class MiniprintJsView(TemplateView):
     content_type = 'text/javascript'
 
 
-class UploadView(TwitterLoginRequired,FormView):
+class UploadView(TwitterLoginRequired, FormView):
     template_name = 'web/upload.html'
     success_url = '/profile/'
     form_class = DocumentUpload
@@ -79,7 +79,7 @@ class UploadView(TwitterLoginRequired,FormView):
         return super(UploadView, self).form_valid(form)
 
 
-class ProfileView(TwitterLoginRequired,FormView):
+class ProfileView(TwitterLoginRequired, FormView):
     template_name = 'web/profile.html'
     success_url = '/profile/'
     form_class = CompanyForm
@@ -94,9 +94,9 @@ class ProfileView(TwitterLoginRequired,FormView):
             context['documents'] = self.request.user.company.get_documents()
         return context
 
-    def form_valid(self,form):
+    def form_valid(self, form):
         company_name = form.cleaned_data['company_name']
-        new_company = Company(user=self.request.user,name=company_name)
+        new_company = Company(user=self.request.user, name=company_name)
         new_company.save()
         return super(ProfileView, self).form_valid(form)
 
@@ -110,7 +110,7 @@ class SearchView(FormView):
         context = super(SearchView, self).get_context_data(**kwargs)
         return context
 
-    def form_valid(self,form):
+    def form_valid(self, form):
         company_name = form.cleaned_data['company_name']
         results = Company.objects.filter(name__icontains=company_name)
         return self.render_to_response(self.get_context_data(form=form, results=results))
