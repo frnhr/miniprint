@@ -1,5 +1,25 @@
 {% extends 'web/main.html' %}
 
+{% block extrahead %}
+    {{ block.super }}
+    <script type="text/javascript">
+        jQuery(function($){
+            $('.show_embed').on('click', function(event){
+                event.preventDefault();
+                $target = $(this).parent().find('.embed');
+                if ($target.height() > 50) {
+                    $target.stop().animate({'height': 0});
+                } else {
+                    $target.stop().css({'height': 'auto'});
+                    var h = $target.height();
+                    $target.stop().css({'height': 0});
+                    $target.stop().animate({'height': h});
+                }
+            });
+        });
+    </script>
+{% endblock extrahead %}
+
 {% block page_content %}
     <section id="profile">
     	<div class="container">
@@ -40,8 +60,12 @@
                             </td>
                             <td>
                                 <a href="#" class="show_embed"><em>view embed code</em></a>
-                                <div class="embed">
-                                    <textarea>{{ document.get_code }}</textarea>
+                                <div class="embed" style="overflow: hidden; height: 0;">
+                                    <textarea rows="5" cols="20" style="width: 280px;">{{ document.get_code }}</textarea>
+                                    <br />
+                                    <p style="width: 280px; font-style: italic;">
+                                        Replace your "I agree" checkbox with this code. We will render the checkbox and a link to your legal document.
+                                    </p>
                                 </div>
                             </td>
                         </tr>
