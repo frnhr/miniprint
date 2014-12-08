@@ -39,7 +39,10 @@
                                 <a href="{% url 'document' document.id %}"> {{ document.title }}</a>
                             </td>
                             <td>
-                                <a href="#"><em>view embed code</em></a>
+                                <a href="#" class="show_embed"><em>view embed code</em></a>
+                                <div class="embed">
+                                    <textarea>{{ document.get_code }}</textarea>
+                                </div>
                             </td>
                         </tr>
                     {% empty %}

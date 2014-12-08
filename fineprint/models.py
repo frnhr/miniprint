@@ -3,6 +3,7 @@ from string import rstrip
 from django.db import models
 from django.utils import timezone
 from discuss.models import DiscussScoreMixin
+from remote.includes import get_code
 from users.models import Company
 from discuss.models import Comment, ChunkVote
 
@@ -48,6 +49,10 @@ class Document(models.Model):
                 order=i,
             )
 
+    def get_code(self):
+        if not self.id:
+            return ''
+        return get_code(self.id)
 
 class Chunk(DiscussScoreMixin, models.Model):
     TYPES = namedtuple('TYPES', ('heading', 'paragraph', ))._make(range(2))
