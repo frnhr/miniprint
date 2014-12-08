@@ -14,6 +14,7 @@ class ChunkInline(SortableInlineAdminMixin, admin.TabularInline):
     model = Chunk
     extra = 0
 
+    readonly_fields = ('id', )
 
 class DocumentAdmin(admin.ModelAdmin):
     model = Document

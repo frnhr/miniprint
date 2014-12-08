@@ -48,7 +48,7 @@ class ChunkVote(VoteModel, models.Model):
 class Comment(MPTTModel, DiscussScoreMixin):
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
     chunk = models.ForeignKey('fineprint.Chunk', null=True, blank=True, related_name='comments')
-    user = models.ForeignKey('users.User')
+    user = models.ForeignKey('users.User', related_name='comments')
     text = models.CharField(max_length=255, null=False, blank=False)
     timestamp = models.DateTimeField()
 

@@ -1,6 +1,8 @@
 {% extends 'web/main.html' %}
+
+{% block body_class %}homepage{% endblock %}
+
 {% block page_content %}
-    {% csrf_token %}
     <section id="main-search">
         <div class="container">
             <div class="center wow fadeInDown">

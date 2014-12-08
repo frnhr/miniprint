@@ -1,4 +1,5 @@
 from django.views.generic import TemplateView, FormView
+from django.views.generic.detail import DetailView
 from discuss.models import Comment
 from .forms import CompanyForm, DocumentUpload
 from users.models import Company
@@ -27,9 +28,21 @@ class HomeView(TwitterLoginRequired, TemplateView):
         return context
 
 
-class DocumentView(TemplateView):
-
+class DocumentView(DetailView):
+    model = Document
     template_name = 'web/document.html'
+    template_name_field = 'document'
+
+    def get_context_data(self, **kwargs):
+        context = super(DocumentView, self).get_context_data(**kwargs)
+        if self.request.user.is_authenticated():
+            context['voted_chunks_up'] = self.request.user.chunk_votes.filter(score=1).values_list('target_id', flat=True)
+            context['voted_chunks_down'] = self.request.user.chunk_votes.filter(score=-1).values_list('target_id', flat=True)
+            context['voted_comments_up'] = self.request.user.comment_votes.filter(score=1).values_list('target_id', flat=True)
+            context['voted_comments_down'] = self.request.user.comment_votes.filter(score=-1).values_list('target_id', flat=True)
+        context['scoring_enabled'] = False if 'remote' in self.request.GET else True
+        context['extends_template_name'] = 'web/main_popup.html' if 'remote' in self.request.GET else 'web/main.html'
+        return context
 
 
 class ChunkView(TemplateView):
@@ -42,6 +55,12 @@ class AboutView(TemplateView):
 
 class LoginView(TemplateView):
     template_name = 'web/login.html'
+
+
+class MiniprintJsView(TemplateView):
+    template_name = 'web/miniprint.js'
+    content_type = 'text/javascript'
+
 
 class UploadView(TwitterLoginRequired,FormView):
     template_name = 'web/upload.html'

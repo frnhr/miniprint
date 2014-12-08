@@ -118,6 +118,10 @@ body > section {
   padding: 70px 0;
 }
 
+body.popup > section {
+  padding: 0 0 10px 0;
+}
+
 .center {
   text-align: center;
   padding-bottom: 55px;
@@ -2666,4 +2670,32 @@ shortcodes page css
     border-color: #337ab7;
     color: #fff;
     z-index: 2;
+}
+
+
+
+section#legal .media.long-description {
+  padding: 10px;
+  margin: 0 -15px;
+}
+section#legal .media.long-description .score_readonly {
+  color: #c5c5c5;
+  float: right;
+}
+section#legal .media.long-description .score {
+  color: #000000;
+}
+section#legal .media.long-description.good {
+  background: #DBFDDB;
+}
+section#legal .media.long-description.good .score {
+  color: #008800;
+  font-weight: bold;
+}
+section#legal .media.long-description.bad {
+  background: #FFDBDB;
+}
+section#legal .media.long-description.bad .score {
+  color: #aa2222;
+  font-weight: bold;
 }
