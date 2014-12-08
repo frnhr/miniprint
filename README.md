@@ -25,14 +25,14 @@ With such data, we hope that it will be obvious to everyone how ridiculous that 
 
 The first step in achieving all those nice things mentioned above is to create a service that will provide:
 
- 1. **legal documents in the cloud**
+ 1. **legal documents in the cloud**  
     A place where company employees can manage all the documents that their web users have to agree to
 
- 2. **that famous "I agree" checkbox**
+ 2. **that famous "I agree" checkbox**  
     A snippet of JS code that will render the checkbox, and allow us to keep track of the agreeing that's going on.
     For now, we're only tracking out registered users.
 
- 3.  **community**
+ 3.  **community**  
  Last but definitely not least, we provide a platform for discussing and rating of legal documents - anyone who's interested can partake, much like StackOverflow or Reddit. We automatically parse legal text into paragraphs and let the community to it's work.
 ### Where?
 
