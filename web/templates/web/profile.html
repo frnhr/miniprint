@@ -1,0 +1,44 @@
+{% extends 'web/main.html' %}
+
+{% block page_content %}
+    <section id="profile">
+    	<div class="container">
+	    	<h2>Hey, <strong>pero@twitter</strong></h2>
+	        <div class="col-sm-6">
+                Legal documents you agreed on
+                <hr />
+                <table class="table">
+                    <tr><td>License 1</td><td>Bla bla bla bla bla</td></tr>
+                </table>
+	        </div>
+            <div class="col-sm-6">
+                {% if  not company %}
+                Do you represent company and want upload your legal documents here?
+                <hr/>
+
+                <form class="form-inline" role="form" action="/profile/" method="post">
+                  <div class="form-group">
+                    <div class="input-group">
+                        {{ form.company_name }}
+                      <!-- <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Enter company name"> -->
+                    </div>
+                  </div>
+
+                  <button type="submit" class="btn btn-default">Add company</button>
+                    {% csrf_token %}
+                </form>
+                {% else %}
+                Legal documents for company {{ company.name }}
+                <hr/>
+                    <table class="table">
+                    {% for document in documents   %}
+                    <tr><td><a href="{% url 'document' document.id %}"> {{ document.title }}</a></td></tr>
+                    {% endfor %}
+                    </table>
+                    <a href="{% url 'upload' %}" class="btn btn-default">Add document</a>
+                {% endif %}
+	        </div>
+        </div>
+
+    </section>
+{% endblock %}

@@ -1,24 +1,43 @@
 {% extends 'web/main.html' %}
 
 {% block page_content %}
+{% block scripts %}
+<script src="{{ STATIC_URL }}web/js/jquery.autosize.min.js"></script>
 <script src="{{ STATIC_URL }}web/js/markdown/lib/marked.js"></script>
 <script type="text/javascript">
 
 document.addEventListener("DOMContentLoaded", function(event) {
-     $('textarea').keypress(function(){
 
-  markedData = marked($('textarea').val())
-  $('#text-demo').html(markedData);
-});
+    markedData = marked($('textarea').val())
+    $('#text-demo').html(markedData).height($('textarea').height())
+
+    $('textarea').autosize();
+    $('textarea').on('change input',function(){
+        markedData = marked($('textarea').val())
+        $('#text-demo').html(markedData).height($('textarea').height())
+    });
+
 });
 </script>
+{% endblock %}
     <section id="document-upload">
+
         <div class="container">
+            <h2>Upload your legal document</h2>
+            <hr />
             <div class="col-sm-6">
 
-                <textarea rows="10"></textarea>
+                <form action="/upload/" method="post">
+                    {{ form.text }}
+                     <div class="form-group">
+                        <label for="title">Document title</label>
+                        {{ form.title }}
+                      </div>
+                    <input type="submit" class="btn btn-default" value="Upload document">
+                    {% csrf_token %}
+                </form>
             </div>
-        <div class="col-sm-6" id="text-demo"></div>
+        <div class="col-sm-6"  id="text-demo"></div>
 
      </div>
     </div>
