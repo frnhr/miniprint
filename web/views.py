@@ -71,11 +71,12 @@ class UploadView(TwitterLoginRequired, FormView):
         context = super(UploadView, self).get_context_data(**kwargs)
         return context
 
-    def form_valid(self,form):
-        company = self.request.user.company
-        title   = form.cleaned_data['title']
+    def form_valid(self, form):
+        company = Company.objects.get_or_create(user=self.request.user)[0]  # (obj, created)[0]
+        title = form.cleaned_data['title']
         new_document = Document(company=company,title=title)
         new_document.save()
+        new_document.parse_input(form.cleaned_data['text'])
         return super(UploadView, self).form_valid(form)
 
 
