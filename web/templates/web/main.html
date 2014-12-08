@@ -27,7 +27,7 @@
     {% block extrahead %}{% endblock %}
 </head><!--/head-->
 
-<body class="homepage">
+<body class="{% block body_class %}{% endblock %}">
 
     {% block header %}
         <header id="header">
