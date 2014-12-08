@@ -1,5 +1,11 @@
 {% extends 'web/main.html' %}
-
+{% block scripts %}
+        <script type="text/javascript">
+            document.addEventListener("DOMContentLoaded", function (event) {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
+{% endblock %}
 {% block page_content %}
     <section id="main-search">
         <div class="container">
@@ -28,9 +34,9 @@
                 {% for company in results %}
 
                     <div class="list-group">
-                      <li class="list-group-item active">{{ company.name }}</li>
+                      <li class="list-group-item active"> {{ company.name }}</li>
                     {% for document in company.get_documents %}
-                        <a href="{% url 'document' document.id %}" class="list-group-item">{{ document.company.name }} - {{ document.title }}</a>
+                        <a href="{% url 'document' document.id %}" class="list-group-item"><span class="label label-default" data-toggle="tooltip" data-placement="top" title="User friendliness of legal document">{{ document.percentage }}%</span> {{ document.company.name }} - {{ document.title }}</a>
                     {% endfor %}
                     </div>
                 {% endfor %}
