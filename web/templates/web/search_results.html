@@ -4,7 +4,7 @@
     <section id="main-search">
         <div class="container">
             <div class="center wow fadeInDown">
-                <h2>Find company legal documents</h2>
+                <h2 id="h2">Find company legal documents</h2>
                 {% block please_twitter_login %}{% endblock %}
                 <form action="" method="post">
                     {% csrf_token %}
@@ -14,7 +14,6 @@
 					        <button type class="btn btn-default" type="submit">Search!</button>
 					      </span>
 				    </div><!-- /input-group -->
-
                 </form>
             </div>
 
@@ -31,7 +30,7 @@
                     <div class="list-group">
                       <li class="list-group-item active">{{ company.name }}</li>
                     {% for document in company.get_documents %}
-                        <a href="{% url 'document' document.id %}" class="list-group-item">{{ document.title }}</a>
+                        <a href="{% url 'document' document.id %}" class="list-group-item">{{ document.company.name }} - {{ document.title }}</a>
                     {% endfor %}
                     </div>
                 {% endfor %}

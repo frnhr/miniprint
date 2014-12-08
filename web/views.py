@@ -48,7 +48,29 @@ class VotedDataMixin(object):
         return context
 
 
-class HomeView(TwitterLoginRequired, TemplateView):
+class SearchFormMixin(FormView):
+    form_class = CompanyForm
+
+    def get_context_data(self, **kwargs):
+        context = super(SearchFormMixin, self).get_context_data(**kwargs)
+        if not context.get('form', None):
+            context['form'] = self.form_class()
+        return context
+
+
+
+
+class SearchView(TwitterLoginRequired, SearchFormMixin):
+    template_name = 'web/search_results.html'
+    success_url = '/search/results/'
+
+    def form_valid(self, form):
+        company_name = form.cleaned_data['company_name']
+        results = Company.objects.filter(name__icontains=company_name)
+        return self.render_to_response(self.get_context_data(form=form, results=results))
+
+
+class HomeView(SearchFormMixin, TwitterLoginRequired, TemplateView):
     template_name = 'web/index.html'
 
     def get_context_data(self, **kwargs):
@@ -133,21 +155,6 @@ class DashboardView(TwitterLoginRequired, FormView):
         new_company = Company(user=self.request.user, name=company_name)
         new_company.save()
         return super(DashboardView, self).form_valid(form)
-
-
-class SearchView(FormView):
-    template_name = 'web/search_results.html'
-    success_url = '/search/results/'
-    form_class = CompanyForm
-
-    def get_context_data(self, **kwargs):
-        context = super(SearchView, self).get_context_data(**kwargs)
-        return context
-
-    def form_valid(self, form):
-        company_name = form.cleaned_data['company_name']
-        results = Company.objects.filter(name__icontains=company_name)
-        return self.render_to_response(self.get_context_data(form=form, results=results))
 
 
 class NewCommentView(FormView):
