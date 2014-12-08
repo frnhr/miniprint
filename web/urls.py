@@ -14,5 +14,5 @@ urlpatterns = patterns(
     url(r'^dashboard/$', DashboardView.as_view(), name='dashboard'),
     url(r'^miniprint.js$', MiniprintJsView.as_view(), name='miniprint_js'),
     url(r'^search/results/$', SearchView.as_view(), name='search'),
-    url(r'^comment/chunk/(?P<chunk_id>[\d]+)?/parent/(?P<parent_id>[\d]+)?$', NewCommentView.as_view(), name='new_comment'),
+    url(r'^comment/chunk/(?P<chunk_id>[\d]+)?/parent/(?P<parent_id>[\d]+)/?$', NewCommentView.as_view(), name='new_comment'),
 )
