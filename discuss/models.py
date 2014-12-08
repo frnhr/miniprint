@@ -53,10 +53,10 @@ class Comment(MPTTModel, DiscussScoreMixin):
     timestamp = models.DateTimeField()
 
     class MPTTMeta:
-        order_insertion_by = ['-discuss_score', ]
+        order_insertion_by = ['-discuss_score', '-timestamp', ]
 
     class Meta:
-        ordering = ['-discuss_score', ]
+        ordering = ['-discuss_score', '-timestamp', ]
 
     def save(self, *args, **kwargs):
         if not self.timestamp:

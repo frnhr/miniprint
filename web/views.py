@@ -3,9 +3,10 @@ from django.views.generic.detail import DetailView
 from discuss.models import Comment
 from .forms import CompanyForm, DocumentUploadForm, CommentForm
 from users.models import Company
-from fineprint.models import Document,Chunk
+from fineprint.models import Document, Chunk
 import datetime
 from django.core.urlresolvers import reverse
+
 
 class TwitterLoginRequired(object):
     anonymous_template_name = 'web/anonymous.html'
@@ -24,10 +25,26 @@ class VotedDataMixin(object):
     def get_context_data(self, **kwargs):
         context = super(VotedDataMixin, self).get_context_data(**kwargs)
         if self.request.user.is_authenticated():
-            context['voted_chunks_up'] = self.request.user.chunk_votes.filter(score=1).values_list('target_id', flat=True)
-            context['voted_chunks_down'] = self.request.user.chunk_votes.filter(score=-1).values_list('target_id', flat=True)
-            context['voted_comments_up'] = self.request.user.comment_votes.filter(score=1).values_list('target_id', flat=True)
-            context['voted_comments_down'] = self.request.user.comment_votes.filter(score=-1).values_list('target_id', flat=True)
+            context['voted_chunks_up'] = (
+                self.request.user.chunk_votes
+                .filter(score=1)
+                .values_list('target_id', flat=True)
+            )
+            context['voted_chunks_down'] = (
+                self.request.user.chunk_votes
+                .filter(score=-1)
+                .values_list('target_id', flat=True)
+            )
+            context['voted_comments_up'] = (
+                self.request.user.comment_votes
+                .filter(score=1)
+                .values_list('target_id', flat=True)
+            )
+            context['voted_comments_down'] = (
+                self.request.user.comment_votes
+                .filter(score=-1)
+                .values_list('target_id', flat=True)
+            )
         return context
 
 
@@ -83,7 +100,7 @@ class UploadView(TwitterLoginRequired, FormView):
     def form_valid(self, form):
         company = Company.objects.get_or_create(user=self.request.user)[0]  # (obj, created)[0]
         title = form.cleaned_data['title'].capitalize()
-        new_document = Document(company=company,title=title)
+        new_document = Document(company=company, title=title)
         new_document.save()
         new_document.parse_input(form.cleaned_data['text'])
         return super(UploadView, self).form_valid(form)
@@ -106,7 +123,7 @@ class DashboardView(TwitterLoginRequired, FormView):
 
     def form_valid(self, form):
         company_name = form.cleaned_data['company_name'].capitalize()
-        new_company = Company(user=self.request.user,name=company_name)
+        new_company = Company(user=self.request.user, name=company_name)
         new_company.save()
         return super(DashboardView, self).form_valid(form)
 
@@ -131,9 +148,9 @@ class NewCommentView(FormView):
     form_class = CommentForm
 
     def get_context_data(self, **kwargs):
-        context   = super(NewCommentView, self).get_context_data(**kwargs)
+        context = super(NewCommentView, self).get_context_data(**kwargs)
         parent_id = int(self.kwargs['parent_id'])
-        chunk_id  = int(self.kwargs['chunk_id'])
+        chunk_id = int(self.kwargs['chunk_id'])
         context['form'] = CommentForm()
 
         if parent_id:
@@ -142,13 +159,16 @@ class NewCommentView(FormView):
         else:
             chunk = Chunk.objects.get(id=chunk_id)
             context['text'] = chunk.text
+        else:
+            parent = Comment.objects.get(id=parent_id)
+            context['text'] = parent.text
 
         return context
 
-    def form_valid(self,form):
-        parent_id   = int(self.kwargs['parent_id'])
-        chunk_id    = int(self.kwargs['chunk_id'])
-        text        = form.cleaned_data['text']
+    def form_valid(self, form):
+        parent_id = int(self.kwargs['parent_id'])
+        chunk_id = int(self.kwargs['chunk_id'])
+        text = form.cleaned_data['text']
 
         new_comment = Comment()
 
@@ -157,8 +177,8 @@ class NewCommentView(FormView):
         else:
             parent  = None
 
-        new_comment.parent  = parent
-        chunk             = Chunk.objects.get(id=chunk_id)
+         new_comment.parent  = parent        
+         chunk   = Chunk.objects.get(id=chunk_id)
         new_comment.chunk = chunk
 
         new_comment.user = self.request.user
@@ -169,5 +189,5 @@ class NewCommentView(FormView):
         return super(NewCommentView, self).form_valid(form)
 
     def get_success_url(self):
-        chunk_id    = int(self.kwargs['chunk_id'])
-        return reverse('chunk',args=(chunk_id,))
+        chunk_id = int(self.kwargs['chunk_id'])
+        return reverse('chunk', args=(chunk_id,))
