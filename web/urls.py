@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from .views import HomeView,DocumentView,ChunkView,LoginView,AboutView,UploadView,ProfileView,SearchView, MiniprintJsView
+from .views import HomeView,DocumentView,ChunkView,LoginView,AboutView,UploadView,DashboardView,SearchView, MiniprintJsView, NewCommentView
 
 
 urlpatterns = patterns(
@@ -11,7 +11,8 @@ urlpatterns = patterns(
     url(r'^$', HomeView.as_view(), name='home'),
     url(r'^document/(?P<pk>[\d]+)?$', DocumentView.as_view(), name='document'),
     url(r'^document/chunk/(?P<chunk_id>[\d]+)?$', ChunkView.as_view(), name='chunk'),
-    url(r'^profile/$', ProfileView.as_view(), name='profile'),
+    url(r'^dashboard/$', DashboardView.as_view(), name='dashboard'),
     url(r'^miniprint.js$', MiniprintJsView.as_view(), name='miniprint_js'),
     url(r'^search/results/$', SearchView.as_view(), name='search'),
+    url(r'^comment/chunk/(?P<chunk_id>[\d]+)?/parent/(?P<parent_id>[\d]+)?$', NewCommentView.as_view(), name='new_comment'),
 )
